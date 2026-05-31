@@ -8,8 +8,8 @@
   <!-- Logo 区域 -->
   <view class="logo-area">
     <text class="logo-emoji">👨‍🍳</text>
-    <text class="logo-title">合合小厨神</text>
-    <text class="logo-subtitle">合成食材，烹饪中华美食</text>
+    <text class="logo-title">{{i18n.appName}}</text>
+    <text class="logo-subtitle">{{i18n.appSlogan}}</text>
   </view>
 
   <!-- 进度条 -->
@@ -25,8 +25,8 @@
   <view class="error-area" wx:if="{{showRetry}}">
     <text class="error-icon">😞</text>
     <text class="error-text">{{errorMessage}}</text>
-    <button class="btn-primary retry-btn" bindtap="onRetry">重试</button>
-    <button class="btn-ghost skip-btn" wx:if="{{showOffline}}" bindtap="onSkipOffline">跳过加载（离线模式）</button>
+    <button class="btn-primary retry-btn" bindtap="onRetry">{{i18n.retry}}</button>
+    <button class="btn-ghost skip-btn" wx:if="{{showOffline}}" bindtap="onSkipOffline">{{i18n.offlineMode}}</button>
   </view>
 
   <!-- 版本号 -->

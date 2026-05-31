@@ -14,6 +14,17 @@ Page({
   },
 
   onLoad() {
+    this.setData({
+      i18n: {
+        title: i18n.t('leaderboard.title'),
+        weekly: i18n.t('leaderboard.weekly'),
+        total: i18n.t('leaderboard.total'),
+        myRank: i18n.t('leaderboard.my_rank'),
+        loadFailed: i18n.t('leaderboard.load_failed'),
+        retry: i18n.t('loading.retry'),
+        loading: i18n.t('common.loading') || '加载中...'
+      }
+    });
     this._loadData();
   },
 

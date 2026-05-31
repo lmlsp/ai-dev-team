@@ -31,6 +31,7 @@ public class LeaderboardService {
 
     private static final String WEEKLY_KEY_PREFIX = "lb:weekly:";
     private static final String TOTAL_KEY = "lb:total";
+    private static final long MAX_LEADERBOARD_SIZE = 100_000;
 
     /**
      * 更新用户排行榜分数
@@ -42,10 +43,22 @@ public class LeaderboardService {
         // 周榜：按好评度排序
         String weekKey = WEEKLY_KEY_PREFIX + getCurrentWeekKey();
         stringRedisTemplate.opsForZSet().add(weekKey, uid, rating);
+        // 裁剪：仅保留前 MAX_LEADERBOARD_SIZE 名
+        Long weekSize = stringRedisTemplate.opsForZSet().zCard(weekKey);
+        if (weekSize != null && weekSize > MAX_LEADERBOARD_SIZE) {
+            stringRedisTemplate.opsForZSet().removeRange(weekKey, 0,
+                    weekSize - MAX_LEADERBOARD_SIZE - 1);
+        }
 
         // 总榜：level加权，score = level * 1000 + rating
         double totalScore = restaurantLevel * 1000 + rating;
         stringRedisTemplate.opsForZSet().add(TOTAL_KEY, uid, totalScore);
+        // 裁剪：仅保留前 MAX_LEADERBOARD_SIZE 名
+        Long totalSize = stringRedisTemplate.opsForZSet().zCard(TOTAL_KEY);
+        if (totalSize != null && totalSize > MAX_LEADERBOARD_SIZE) {
+            stringRedisTemplate.opsForZSet().removeRange(TOTAL_KEY, 0,
+                    totalSize - MAX_LEADERBOARD_SIZE - 1);
+        }
     }
 
     /**

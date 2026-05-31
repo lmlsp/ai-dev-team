@@ -4,17 +4,17 @@
     <view class="nav-back" bindtap="onBack">
       <text class="back-icon">←</text>
     </view>
-    <text class="nav-title">排行榜</text>
+    <text class="nav-title">{{i18n.title}}</text>
     <view class="nav-placeholder"></view>
   </view>
 
   <!-- Tab 切换 -->
   <view class="tab-bar">
     <view class="tab {{activeTab === 'weekly' ? 'active' : ''}}" data-tab="weekly" bindtap="onTabChange">
-      <text>周榜</text>
+      <text>{{i18n.weekly}}</text>
     </view>
     <view class="tab {{activeTab === 'total' ? 'active' : ''}}" data-tab="total" bindtap="onTabChange">
-      <text>总榜</text>
+      <text>{{i18n.total}}</text>
     </view>
   </view>
 
@@ -41,20 +41,20 @@
 
   <!-- 加载中 -->
   <view class="loading-state" wx:if="{{loading}}">
-    <text>加载中...</text>
+    <text>{{i18n.loading}}</text>
   </view>
 
   <!-- 加载失败 -->
   <view class="error-state" wx:if="{{loadFailed && !loading}}">
-    <text>排行榜加载失败</text>
-    <button class="btn-primary" bindtap="onLoad">重试</button>
+    <text>{{i18n.loadFailed}}</text>
+    <button class="btn-primary" bindtap="onLoad">{{i18n.retry}}</button>
   </view>
 
   <!-- 我的排名（吸底） -->
   <view class="my-rank" wx:if="{{myRank}}">
     <view class="my-rank-left">
       <text class="my-rank-num">#{{myRank.rank}}</text>
-      <text class="my-rank-label">我的排名</text>
+      <text class="my-rank-label">{{i18n.myRank}}</text>
     </view>
     <view class="my-rank-right">
       <text class="my-rating">⭐{{myRank.rating}}</text>

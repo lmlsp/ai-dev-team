@@ -10,6 +10,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 能量服务 — 消耗/恢复/服务端时间校验
  */
@@ -131,6 +133,7 @@ public class EnergyService {
         String key = ENERGY_KEY_PREFIX + uid;
         stringRedisTemplate.opsForHash().put(key, "energy", String.valueOf(energy));
         stringRedisTemplate.opsForHash().put(key, "ts", String.valueOf(ts));
+        stringRedisTemplate.expire(key, 30, TimeUnit.DAYS); // 30天不活跃自动清理
     }
 
     /**

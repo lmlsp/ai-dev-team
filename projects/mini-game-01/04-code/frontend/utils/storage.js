@@ -22,6 +22,20 @@ const storage = {
   KEYS: STORAGE_KEYS,
 
   /**
+   * get 是 load 的别名（业界习惯命名）
+   */
+  get(key, defaultValue) {
+    return this.load(key, defaultValue);
+  },
+
+  /**
+   * set 是 save 的别名
+   */
+  set(key, value) {
+    this.save(key, value);
+  },
+
+  /**
    * 保存数据
    * @param {string} key - 键名
    * @param {any} value - 值（会被 JSON.stringify）
@@ -118,7 +132,6 @@ const storage = {
           wx.removeStorageSync(key);
         }
       }
-      console.log('[Storage] 已清除所有游戏数据');
     } catch (e) {
       console.warn('[Storage] 清除失败', e);
     }
@@ -146,7 +159,6 @@ const storage = {
    * 清理旧版本数据（保留最新的）
    */
   _cleanup() {
-    console.log('[Storage] 尝试清理旧数据');
     // 保留核心数据，清理其他
     const keepKeys = [STORAGE_KEYS.GAME_STATE, STORAGE_KEYS.TOKEN, STORAGE_KEYS.CONFIG];
     try {

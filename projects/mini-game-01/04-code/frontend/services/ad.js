@@ -136,7 +136,6 @@ class AdManager {
     return new Promise((resolve, reject) => {
       // 新用户保护期内直接给奖励
       if (this._isInGracePeriod()) {
-        console.log('[Ad] 新用户保护期，直接发放奖励:', scene);
         resolve(true);
         return;
       }

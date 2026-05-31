@@ -8,6 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -47,4 +50,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional
     @Query("UPDATE User u SET u.restaurantLevel = :level WHERE u.uid = :uid")
     int updateRestaurantLevel(@Param("uid") String uid, @Param("level") Integer level);
+
+    @Query("SELECT u FROM User u WHERE u.uid != :uid ORDER BY RAND()")
+    Page<User> findRandomUsersExcluding(@Param("uid") String uid, Pageable pageable);
 }

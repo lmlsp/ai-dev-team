@@ -48,8 +48,8 @@ public class AdService {
 
     private static final String AD_COUNT_KEY = "ad:count:";
 
-    // 优量汇回调验签密钥（实际需要从优量汇后台获取）
-    private static final String YLH_SECRET_KEY = "your_ylh_secret_key";
+    @Value("${ad.ylh.secret-key}")
+    private String ylhSecretKey;
 
     /**
      * 客户端上报广告观看（用于统计和发奖校验）
@@ -66,10 +66,11 @@ public class AdService {
             throw new GameException(20002, "今日该广告已达观看上限（" + dailyLimit + "次）");
         }
 
-        // 2. 去重校验（同 transId 不重复发放）
+        // 2. 去重校验（Redis SETNX 原子操作，避免竞态条件）
         if (request.getTransId() != null && !request.getTransId().isBlank()) {
-            long dupCount = adWatchLogRepository.countByTransId(request.getTransId());
-            if (dupCount > 0) {
+            Boolean firstTime = stringRedisTemplate.opsForValue()
+                    .setIfAbsent("ad:dedup:" + request.getTransId(), "1", 7, TimeUnit.DAYS);
+            if (Boolean.FALSE.equals(firstTime)) {
                 log.warn("广告重复上报: uid={}, transId={}", uid, request.getTransId());
                 throw new GameException(20002, "该广告已领取过奖励了");
             }
@@ -117,17 +118,18 @@ public class AdService {
         String expectedSign = DigestUtil.md5Hex(
                 (dto.getAppId() != null ? dto.getAppId() : "")
                 + (dto.getTransId() != null ? dto.getTransId() : "")
-                + YLH_SECRET_KEY);
+                + ylhSecretKey);
 
         if (!expectedSign.equalsIgnoreCase(dto.getSign())) {
             log.warn("优量汇回调签名验证失败: transId={}", dto.getTransId());
             throw new GameException(20004, "广告回调验签失败");
         }
 
-        // 2. 防重复发放（transId 唯一）
+        // 2. 防重复发放（Redis SETNX 原子操作）
         if (dto.getTransId() != null) {
-            long dupCount = adWatchLogRepository.countByTransId(dto.getTransId());
-            if (dupCount > 0) {
+            Boolean firstTime = stringRedisTemplate.opsForValue()
+                    .setIfAbsent("ad:dedup:" + dto.getTransId(), "1", 7, TimeUnit.DAYS);
+            if (Boolean.FALSE.equals(firstTime)) {
                 log.info("广告回调重复（已发放）: transId={}", dto.getTransId());
                 return;
             }

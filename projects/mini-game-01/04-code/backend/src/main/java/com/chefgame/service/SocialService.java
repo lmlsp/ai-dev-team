@@ -13,6 +13,7 @@ import com.chefgame.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,7 @@ public class SocialService {
     private final SocialVisitRepository socialVisitRepository;
     private final BoardRepository boardRepository;
     private final RestaurantRepository restaurantRepository;
+    private final EnergyService energyService;
     private final StringRedisTemplate stringRedisTemplate;
 
     @Value("${game.visit-daily-limit:10}")
@@ -53,10 +55,9 @@ public class SocialService {
      */
     public SocialResponse getFriends(String uid) {
         // V1.0 模拟好友列表（实际需通过微信关系链获取）
-        List<User> allUsers = userRepository.findAll();
-        List<SocialResponse.FriendBrief> friends = allUsers.stream()
-                .filter(u -> !u.getUid().equals(uid))
-                .limit(20)
+        // 使用分页查询，避免全表扫描
+        var page = userRepository.findRandomUsersExcluding(uid, PageRequest.of(0, 20));
+        List<SocialResponse.FriendBrief> friends = page.getContent().stream()
                 .map(u -> SocialResponse.FriendBrief.builder()
                         .uid(u.getUid())
                         .nickName(u.getNickName())
@@ -222,12 +223,8 @@ public class SocialService {
             throw new GameException(14007, "今日赠送次数已用完（每日上限" + giftDailyLimit + "次）");
         }
 
-        // 赠送 10 点能量给好友
-        User friend = userRepository.findByUid(friendUid).get();
-        int newEnergy = Math.min(100, friend.getEnergy() + 10);
-        friend.setEnergy(newEnergy);
-        friend.setEnergyTs(System.currentTimeMillis());
-        userRepository.save(friend);
+        // 赠送 10 点能量给好友（通过 EnergyService 确保 Redis 同步）
+        energyService.addEnergy(friendUid, 10);
 
         // 更新计数
         stringRedisTemplate.opsForValue().increment(key);

@@ -22,6 +22,7 @@ Page({
   _startTime: 0,
   _timeoutTimer: null,
   _hardTimeoutTimer: null,
+  _finished: false,
   _tips: [],
 
   onLoad() {
@@ -33,6 +34,17 @@ Page({
     }
 
     this._showRandomTip();
+
+    // 加载 i18n 文案
+    this.setData({
+      i18n: {
+        appName: i18n.t('app.name'),
+        appSlogan: i18n.t('app.slogan'),
+        retry: i18n.t('loading.retry'),
+        offlineMode: i18n.t('loading.offline_mode')
+      }
+    });
+
     this._startLoading();
   },
 
@@ -58,6 +70,18 @@ Page({
    * 主加载流程
    */
   async _startLoading() {
+    // 超时保护
+    this._timeoutTimer = setTimeout(() => {
+      if (!this._finished) this._handleLoadError(new Error('timeout'));
+    }, LOADING_TIMEOUT);
+
+    this._hardTimeoutTimer = setTimeout(() => {
+      if (!this._finished) {
+        this.setData({ showOffline: true });
+        this._handleLoadError(new Error('hard_timeout'));
+      }
+    }, LOADING_HARD_TIMEOUT);
+
     try {
       // 1. 版本检查
       this._setProgress(10, i18n.t('loading.checking'));
@@ -153,6 +177,7 @@ Page({
    * 进入游戏
    */
   _enterGame() {
+    this._finished = true;
     this._clearTimers();
     wx.redirectTo({
       url: '/pages/home/home'

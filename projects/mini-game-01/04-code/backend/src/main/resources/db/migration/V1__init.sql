@@ -54,8 +54,7 @@ CREATE TABLE IF NOT EXISTS `merge_log` (
   `result_level`    TINYINT       NOT NULL,
   `created_at`      DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `idx_uid` (`uid`),
-  KEY `idx_created_at` (`created_at`)
+  KEY `idx_uid_created` (`uid`, `created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   COMMENT='合成日志表';
 

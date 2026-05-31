@@ -237,7 +237,6 @@ Page({
         // 记录生成动画（§5.6 食材生成动画 — 300ms 气泡冒出）
         this._spawnItems = this._spawnItems || [];
         this._spawnItems.push({ idx, startTime: Date.now(), duration: 300 });
-        console.log('[Home] 自动生成食材:', t, '位置:', idx);
       }
     }, this._autoGenInterval);
   },
@@ -403,6 +402,23 @@ Page({
   _render(delta) {
     const ctx = this.ctx;
     if (!ctx) return;
+
+    // 脏标记机制：无拖拽、无动画、无订单倒计时时跳过绘制，降低空闲功耗
+    const hasDrag = !!(this.dragHandler && this.dragHandler.dragState);
+    const hasAnimations = !!(this.particles && this.particles.isActive()) ||
+      (this._spawnItems && this._spawnItems.length > 0) ||
+      (this._mergeBounceCells && this._mergeBounceCells.length > 0) ||
+      (this._goldFloats && this._goldFloats.length > 0);
+    const needsOrderUpdate = this.orderManager && this.orderManager.hasActiveOrders();
+
+    if (!hasDrag && !hasAnimations && !needsOrderUpdate && !this._dirty) {
+      if (!this._idleFrameCount) this._idleFrameCount = 0;
+      this._idleFrameCount++;
+      if (this._idleFrameCount < 60) return;
+      this._idleFrameCount = 0;
+    }
+    this._idleFrameCount = 0;
+    this._dirty = false;
 
     const w = this.canvasWidth;
     const h = this.canvasHeight;
@@ -1056,9 +1072,6 @@ Page({
     // 通知游戏状态
     this._showToast(i18n.t('home.merge_success'));
 
-    console.log('[Home] 合成:', fromCell.itemType, 'Lv.' + fromCell.level,
-      '+', toCell.itemType, 'Lv.' + toCell.level,
-      '→', result.itemType, 'Lv.' + (result.level || 0));
   },
 
   /**
@@ -1137,7 +1150,6 @@ Page({
       this._updateOrderDisplay();
     }, 1000);
 
-    console.log('[Home] 上菜成功:', item.itemType, '+', goldEarned, '金币');
   },
 
   /**
@@ -1151,7 +1163,6 @@ Page({
       this.gameStore.addGold(sellPrice);
       this.setData({ gold: this.gameStore.get('gold') });
       this._showToast('卖出 +' + sellPrice + ' 金币');
-      console.log('[Home] 卖出:', item.itemType, 'Lv.' + item.level, '+' + sellPrice);
     }
   },
 

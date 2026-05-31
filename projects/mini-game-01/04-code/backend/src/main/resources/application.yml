@@ -13,7 +13,7 @@ spring:
 
 # JWT 配置
 jwt:
-  secret: chefgame2026secretkey!!@#$%^&*()minigame
+  secret: ${JWT_SECRET}
   expiration: 604800000  # 7 天 (毫秒)
 
 # 微信小程序配置
@@ -43,6 +43,11 @@ game:
   ad-speedup-daily-limit: 8
   board-auto-generate-interval: 30  # 30 秒自动生成
   max-auto-generate-level: 0
+
+# 广告平台配置
+ad:
+  ylh:
+    secret-key: ${YLH_SECRET_KEY}
 
 # 雪花ID配置
 snowflake:
