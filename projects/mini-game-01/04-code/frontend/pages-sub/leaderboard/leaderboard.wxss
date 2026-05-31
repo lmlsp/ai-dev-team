@@ -1,0 +1,99 @@
+/* leaderboard.wxss */
+.lb-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+.nav-bar {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24rpx;
+  background: #fff;
+  flex-shrink: 0;
+}
+.nav-back { width: 80rpx; }
+.back-icon { font-size: 40rpx; color: var(--color-text); }
+.nav-title { font-size: var(--font-lg); font-weight: 700; }
+.nav-placeholder { width: 80rpx; }
+
+.tab-bar {
+  display: flex;
+  background: #fff;
+  padding: 0 24rpx 16rpx;
+  gap: 16rpx;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 12rpx;
+  font-size: var(--font-md);
+  color: var(--color-text-light);
+  border-bottom: 3rpx solid transparent;
+  transition: all 0.2s;
+}
+.tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 700;
+}
+
+.lb-list {
+  flex: 1;
+  padding: 0 24rpx;
+}
+.lb-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 16rpx;
+  background: #fff;
+  border-radius: var(--radius-md);
+  margin-bottom: 10rpx;
+  gap: 16rpx;
+}
+.rank-badge {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--color-text-light);
+}
+.rank-1, .rank-2, .rank-3 { font-size: 32rpx; }
+.lb-avatar { font-size: 40rpx; }
+.lb-info { flex: 1; display: flex; flex-direction: column; }
+.lb-name { font-size: var(--font-md); font-weight: 600; }
+.lb-restaurant { font-size: var(--font-xs); color: var(--color-text-light); }
+.lb-stats { display: flex; flex-direction: column; align-items: flex-end; }
+.lb-rating { font-size: var(--font-sm); color: #FFD700; }
+.lb-level { font-size: var(--font-xs); color: var(--color-primary); }
+
+.loading-state, .error-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-light);
+  gap: 16rpx;
+}
+
+.my-rank {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 32rpx;
+  background: #fff;
+  border-top: 1rpx solid #f0f0f0;
+  box-shadow: 0 -2rpx 8rpx rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+.my-rank-left { display: flex; align-items: center; gap: 12rpx; }
+.my-rank-num { font-size: var(--font-lg); font-weight: 700; color: var(--color-primary); }
+.my-rank-label { font-size: var(--font-sm); color: var(--color-text-light); }
+.my-rating { font-size: var(--font-md); font-weight: 600; }

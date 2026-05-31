@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/loading/loading",
+    "pages/home/home"
+  ],
+  "subPackages": [
+    {
+      "root": "pages-sub/",
+      "pages": [
+        "cookbook/cookbook",
+        "upgrade/upgrade",
+        "leaderboard/leaderboard",
+        "friends/friends",
+        "friend-restaurant/friend-restaurant",
+        "inventory/inventory",
+        "settings/settings",
+        "share/share"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/home/home": {
+      "network": "all",
+      "packages": ["pages-sub/"]
+    }
+  },
+  "window": {
+    "navigationStyle": "custom",
+    "pageOrientation": "portrait",
+    "backgroundColor": "#FFF8F0",
+    "backgroundTextStyle": "light"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于附近餐厅推荐"
+    }
+  },
+  "requiredPrivateInfos": [],
+  "__usePrivacyCheck__": false
+}

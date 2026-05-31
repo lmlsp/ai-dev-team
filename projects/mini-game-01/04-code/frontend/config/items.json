@@ -1,0 +1,56 @@
+[
+  {
+    "id": "speed_boost",
+    "name": "加速药水",
+    "description": "30分钟内食材生成速度翻倍",
+    "type": "consumable",
+    "icon": "⚡",
+    "effect": { "type": "speed_boost", "duration": 1800, "multiplier": 2 },
+    "maxStack": 5
+  },
+  {
+    "id": "board_expand",
+    "name": "扩展卡",
+    "description": "永久扩展棋盘 1 格（最多扩展 5 次）",
+    "type": "consumable",
+    "icon": "📦",
+    "effect": { "type": "board_expand", "slots": 1 },
+    "maxStack": 5
+  },
+  {
+    "id": "time_freeze",
+    "name": "时间冻结器",
+    "description": "冻结所有顾客等待倒计时 30 秒",
+    "type": "consumable",
+    "icon": "⏸️",
+    "effect": { "type": "time_freeze", "duration": 30 },
+    "maxStack": 3
+  },
+  {
+    "id": "gold_magnet",
+    "name": "金币磁铁",
+    "description": "10分钟内上菜获得金币 +50%",
+    "type": "consumable",
+    "icon": "🧲",
+    "effect": { "type": "gold_boost", "duration": 600, "multiplier": 1.5 },
+    "maxStack": 3
+  },
+  {
+    "id": "instant_generate",
+    "name": "食材召唤券",
+    "description": "立即在棋盘空格生成 3 个随机食材",
+    "type": "consumable",
+    "icon": "🎫",
+    "effect": { "type": "instant_generate", "count": 3 },
+    "maxStack": 10
+  },
+  {
+    "id": "double_luck",
+    "name": "幸运加倍券",
+    "description": "下一次合成时有 30% 概率额外获得一个相同物品",
+    "type": "consumable",
+    "icon": "🍀",
+    "effect": { "type": "double_luck", "chance": 0.3 },
+    "maxStack": 5
+  }
+]

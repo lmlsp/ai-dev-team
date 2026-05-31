@@ -1,0 +1,87 @@
+<!--cookbook.wxml - 菜谱图鉴-->
+<view class="cookbook-container">
+  <!-- 导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="nav-title">菜谱图鉴</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 进度条 -->
+  <view class="progress-section">
+    <view class="progress-header">
+      <text class="progress-text">收集进度</text>
+      <text class="progress-count">{{unlockedCount}}/{{totalCount}}</text>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{unlockedCount / totalCount * 100}}%"></view>
+    </view>
+  </view>
+
+  <!-- 菜系筛选 -->
+  <scroll-view class="cuisine-filter" scroll-x="true">
+    <view class="filter-item {{filterCuisine === '' ? 'active' : ''}}" data-cuisine="" bindtap="onFilterCuisine">
+      <text>全部</text>
+    </view>
+    <view class="filter-item {{filterCuisine === '家常菜' ? 'active' : ''}}" data-cuisine="家常菜" bindtap="onFilterCuisine">
+      <text>🏠 家常菜</text>
+    </view>
+    <view class="filter-item {{filterCuisine === '川菜' ? 'active' : ''}}" data-cuisine="川菜" bindtap="onFilterCuisine">
+      <text>🌶️ 川菜</text>
+    </view>
+    <view class="filter-item {{filterCuisine === '粤菜' ? 'active' : ''}}" data-cuisine="粤菜" bindtap="onFilterCuisine">
+      <text>🦐 粤菜</text>
+    </view>
+    <view class="filter-item {{filterCuisine === '创意融合菜' ? 'active' : ''}}" data-cuisine="创意融合菜" bindtap="onFilterCuisine">
+      <text>✨ 创意融合</text>
+    </view>
+    <view class="filter-item {{filterCuisine === '隐藏菜谱' ? 'active' : ''}}" data-cuisine="隐藏菜谱" bindtap="onFilterCuisine">
+      <text>👑 隐藏菜谱</text>
+    </view>
+  </scroll-view>
+
+  <!-- 菜谱网格 -->
+  <scroll-view class="recipe-grid" scroll-y="true">
+    <view class="grid">
+      <view
+        class="recipe-card {{item.unlocked ? '' : 'locked'}}"
+        wx:for="{{recipes}}"
+        wx:key="chainId"
+        wx:if="{{filterCuisine === '' || item.cuisine === filterCuisine}}"
+        data-index="{{index}}"
+        bindtap="onTapRecipe"
+      >
+        <text class="recipe-emoji">{{item.unlocked ? item.emoji : '❓'}}</text>
+        <text class="recipe-name">{{item.unlocked ? item.name : '???'}}</text>
+        <text class="recipe-cuisine">{{item.cuisine}}</text>
+        <view class="recipe-badge" wx:if="{{item.unlocked}}">
+          <text class="badge-text">🪙{{item.goldValue}}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 详情弹窗 -->
+  <view class="detail-modal {{showDetail ? 'show' : ''}}" wx:if="{{selectedRecipe}}">
+    <view class="detail-mask" bindtap="onCloseDetail"></view>
+    <view class="detail-content">
+      <text class="detail-emoji">{{selectedRecipe.emoji}}</text>
+      <text class="detail-name">{{selectedRecipe.name}}</text>
+      <text class="detail-cuisine">{{selectedRecipe.cuisine}}</text>
+      <view class="detail-info">
+        <view class="detail-item">
+          <text class="detail-label">价值</text>
+          <text class="detail-value">🪙{{selectedRecipe.goldValue}}</text>
+        </view>
+        <view class="detail-item">
+          <text class="detail-label">解锁等级</text>
+          <text class="detail-value">Lv.{{selectedRecipe.unlockLevel}}</text>
+        </view>
+      </view>
+      <text class="detail-story" wx:if="{{selectedRecipe.story}}">"{{selectedRecipe.story}}"</text>
+      <button class="btn-primary close-btn" bindtap="onCloseDetail">关闭</button>
+    </view>
+  </view>
+</view>

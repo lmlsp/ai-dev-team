@@ -1,0 +1,63 @@
+<!--leaderboard.wxml - 排行榜-->
+<view class="lb-container">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="nav-title">排行榜</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- Tab 切换 -->
+  <view class="tab-bar">
+    <view class="tab {{activeTab === 'weekly' ? 'active' : ''}}" data-tab="weekly" bindtap="onTabChange">
+      <text>周榜</text>
+    </view>
+    <view class="tab {{activeTab === 'total' ? 'active' : ''}}" data-tab="total" bindtap="onTabChange">
+      <text>总榜</text>
+    </view>
+  </view>
+
+  <!-- 排行列表 -->
+  <scroll-view class="lb-list" scroll-y="true" wx:if="{{!loading && !loadFailed}}">
+    <view class="lb-item" wx:for="{{list}}" wx:key="uid">
+      <view class="rank-badge rank-{{item.rank}}">
+        <text wx:if="{{item.rank === 1}}">🥇</text>
+        <text wx:elif="{{item.rank === 2}}">🥈</text>
+        <text wx:elif="{{item.rank === 3}}">🥉</text>
+        <text wx:else>{{item.rank}}</text>
+      </view>
+      <text class="lb-avatar">{{item.avatarUrl ? '' : '👨‍🍳'}}</text>
+      <view class="lb-info">
+        <text class="lb-name">{{item.nickName}}</text>
+        <text class="lb-restaurant">{{item.restaurantName}}</text>
+      </view>
+      <view class="lb-stats">
+        <text class="lb-rating">⭐{{item.rating}}</text>
+        <text class="lb-level">Lv.{{item.restaurantLevel}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 加载中 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 加载失败 -->
+  <view class="error-state" wx:if="{{loadFailed && !loading}}">
+    <text>排行榜加载失败</text>
+    <button class="btn-primary" bindtap="onLoad">重试</button>
+  </view>
+
+  <!-- 我的排名（吸底） -->
+  <view class="my-rank" wx:if="{{myRank}}">
+    <view class="my-rank-left">
+      <text class="my-rank-num">#{{myRank.rank}}</text>
+      <text class="my-rank-label">我的排名</text>
+    </view>
+    <view class="my-rank-right">
+      <text class="my-rating">⭐{{myRank.rating}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,38 @@
+<!--friends.wxml - 好友列表-->
+<view class="friends-container">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="nav-title">好友列表</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- 好友列表 -->
+  <scroll-view class="friends-list" scroll-y="true" wx:if="{{!loading && !empty}}">
+    <view class="friend-item" wx:for="{{friends}}" wx:key="uid">
+      <text class="friend-avatar">👨‍🍳</text>
+      <view class="friend-info">
+        <text class="friend-name">{{item.nickName}}</text>
+        <text class="friend-restaurant">{{item.restaurantName}} · Lv.{{item.restaurantLevel}}</text>
+        <text class="friend-rating">⭐{{item.rating}}</text>
+      </view>
+      <view class="friend-actions">
+        <button class="action-btn visit-btn" data-uid="{{item.uid}}" bindtap="onVisitFriend" size="mini">拜访</button>
+        <button class="action-btn energy-btn" data-uid="{{item.uid}}" data-name="{{item.nickName}}" bindtap="onSendEnergy" size="mini">送⚡</button>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{empty && !loading}}">
+    <text class="empty-emoji">👥</text>
+    <text class="empty-text">还没有好友在玩</text>
+    <button class="btn-primary" open-type="share">邀请好友来玩</button>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: chef-game
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+# JWT 配置
+jwt:
+  secret: chefgame2026secretkey!!@#$%^&*()minigame
+  expiration: 604800000  # 7 天 (毫秒)
+
+# 微信小程序配置
+wechat:
+  miniapp:
+    app-id: ${WECHAT_APPID:wx0000000000000000}
+    app-secret: ${WECHAT_APP_SECRET:your_app_secret_here}
+    msg-data-format: JSON
+
+# 游戏配置
+game:
+  energy-max: 100
+  energy-recover-interval: 180000  # 3 分钟 (毫秒)
+  energy-recover-amount: 1
+  energy-ad-reward: 30
+  energy-ad-daily-limit: 10
+  gold-initial: 100
+  rating-initial: 3.0
+  rating-max: 5.0
+  rating-min: 1.0
+  board-default-rows: 6
+  board-default-cols: 5
+  board-expanded-rows: 6
+  board-expanded-cols: 7
+  visit-daily-limit: 10
+  gift-daily-limit: 5
+  ad-speedup-daily-limit: 8
+  board-auto-generate-interval: 30  # 30 秒自动生成
+  max-auto-generate-level: 0
+
+# 雪花ID配置
+snowflake:
+  worker-id: 1
+  datacenter-id: 1

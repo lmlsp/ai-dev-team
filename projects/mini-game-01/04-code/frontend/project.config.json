@@ -1,0 +1,46 @@
+{
+  "description": "合合小厨神 - 二合消除+餐厅经营微信小游戏",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": false,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModule": false,
+    "useMultiFrameRuntime": false,
+    "ignoreDevUnusedFiles": false,
+    "ignoreUploadUnusedFiles": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.6.0",
+  "appid": "wxXXXXXXXXXXXXXXXX",
+  "projectname": "chef-game",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
+}

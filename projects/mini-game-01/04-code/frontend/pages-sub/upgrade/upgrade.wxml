@@ -1,0 +1,79 @@
+<!--upgrade.wxml - 餐厅升级-->
+<view class="upgrade-container">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="nav-title">餐厅升级</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view class="upgrade-content" scroll-y="true">
+    <!-- 当前等级 -->
+    <view class="current-level-card">
+      <text class="section-title">当前餐厅</text>
+      <view class="level-display">
+        <text class="level-emoji">{{currentLevel === 1 ? '🛒' : currentLevel === 2 ? '🏠' : currentLevel === 3 ? '🏪' : currentLevel === 4 ? '🏛️' : '👑'}}</text>
+        <text class="level-name">{{currentName}}</text>
+        <text class="level-badge">Lv.{{currentLevel}}</text>
+      </view>
+      <text class="level-desc">{{currentDesc}}</text>
+    </view>
+
+    <!-- 下一等级 -->
+    <view class="next-level-card" wx:if="{{nextLevel}}">
+      <text class="section-title">下一等级</text>
+      <view class="level-display next">
+        <text class="level-emoji">{{nextLevel.level === 2 ? '🏠' : nextLevel.level === 3 ? '🏪' : nextLevel.level === 4 ? '🏛️' : '👑'}}</text>
+        <text class="level-name">{{nextLevel.name}}</text>
+        <text class="level-badge">Lv.{{nextLevel.level}}</text>
+      </view>
+      <text class="level-desc">{{nextLevel.description}}</text>
+
+      <!-- 条件 -->
+      <view class="conditions">
+        <view class="condition {{gold >= nextLevel.goldCost ? 'met' : ''}}">
+          <text class="condition-icon">🪙</text>
+          <text class="condition-text">金币 {{gold}}/{{nextLevel.goldCost}}</text>
+          <text class="condition-status">{{gold >= nextLevel.goldCost ? '✓' : ''}}</text>
+        </view>
+        <view class="condition {{rating >= nextLevel.minRating ? 'met' : ''}}">
+          <text class="condition-icon">⭐</text>
+          <text class="condition-text">好评度 {{rating}}/{{nextLevel.minRating}}</text>
+          <text class="condition-status">{{rating >= nextLevel.minRating ? '✓' : ''}}</text>
+        </view>
+      </view>
+
+      <!-- 解锁内容预览 -->
+      <view class="unlock-preview">
+        <text class="preview-title">升级解锁</text>
+        <view class="preview-list">
+          <view class="preview-item" wx:for="{{nextLevel.unlockCuisines}}" wx:key="*this">
+            <text>🍳 {{item}}</text>
+          </view>
+          <view class="preview-item" wx:if="{{nextLevel.boardRows > 5}}">
+            <text>📦 棋盘扩展至 {{nextLevel.boardRows}}×{{nextLevel.boardCols}}</text>
+          </view>
+          <view class="preview-item" wx:if="{{nextLevel.decorationSlots > 0}}">
+            <text>🎨 装饰位 +{{nextLevel.decorationSlots}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 升级按钮 -->
+      <button
+        class="btn-primary upgrade-btn {{canUpgrade ? '' : 'disabled'}}"
+        bindtap="onUpgrade"
+        disabled="{{!canUpgrade || upgrading}}"
+      >
+        {{upgrading ? '升级中...' : (canUpgrade ? '立即升级' : '条件不足')}}
+      </button>
+    </view>
+
+    <!-- 已满级 -->
+    <view class="max-level" wx:if="{{!nextLevel}}">
+      <text class="max-emoji">👑</text>
+      <text class="max-text">已达最高等级！你就是中华厨神！</text>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,74 @@
+<!--home.wxml - 主界面布局-->
+<view class="home-container">
+  <!-- 顶部状态栏 -->
+  <view class="info-bar">
+    <view class="info-left">
+      <view class="user-info" bindtap="onOpenUpgrade">
+        <text class="user-avatar">{{user.avatarUrl ? '' : '👨‍🍳'}}</text>
+        <view class="user-detail">
+          <text class="restaurant-name">{{restaurantName}}</text>
+          <text class="user-level">Lv.{{restaurantLevel}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="info-right">
+      <!-- 金币 -->
+      <view class="resource-item">
+        <text class="resource-icon">🪙</text>
+        <text class="resource-value">{{gold}}</text>
+      </view>
+      <!-- 好评度 -->
+      <view class="resource-item">
+        <text class="resource-icon">⭐</text>
+        <text class="resource-value">{{rating}}</text>
+      </view>
+      <!-- 能量 -->
+      <view class="resource-item energy-item" bindtap="onGetEnergy">
+        <text class="resource-icon">⚡</text>
+        <text class="resource-value">{{energy}}/{{maxEnergy}}</text>
+        <text class="energy-plus" wx:if="{{energy < maxEnergy}}">+</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Canvas 游戏区（订单区在 Canvas 内绘制） -->
+  <view class="canvas-container">
+    <canvas
+      type="2d"
+      id="gameCanvas"
+      class="game-canvas"
+      bindtouchstart="onCanvasTouchStart"
+      bindtouchmove="onCanvasTouchMove"
+      bindtouchend="onCanvasTouchEnd"
+    ></canvas>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar safe-area-bottom">
+    <view class="bar-btn {{isSellMode ? 'active' : ''}}" bindtap="onToggleSellMode">
+      <text class="bar-btn-icon">💰</text>
+      <text class="bar-btn-text">{{isSellMode ? '退出卖出' : '卖出'}}</text>
+    </view>
+    <view class="bar-btn" bindtap="onOpenCookbook">
+      <text class="bar-btn-icon">📖</text>
+      <text class="bar-btn-text">图鉴</text>
+    </view>
+    <view class="bar-btn" bindtap="onSpeedUp">
+      <text class="bar-btn-icon">⚡</text>
+      <text class="bar-btn-text">加速</text>
+    </view>
+    <view class="bar-btn" bindtap="onOpenUpgrade">
+      <text class="bar-btn-icon">🏠</text>
+      <text class="bar-btn-text">升级</text>
+    </view>
+    <view class="bar-btn" bindtap="onOpenSettings">
+      <text class="bar-btn-icon">⚙️</text>
+      <text class="bar-btn-text">设置</text>
+    </view>
+  </view>
+
+  <!-- Toast 提示 -->
+  <view class="game-toast {{toastVisible ? 'show' : ''}}">
+    <text>{{toastText}}</text>
+  </view>
+</view>

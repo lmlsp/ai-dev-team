@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_USER=chef
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - WECHAT_APPID=${WECHAT_APPID}
+      - WECHAT_APP_SECRET=${WECHAT_APP_SECRET}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: always
+    networks:
+      - chef_game_net
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: chef_game
+      MYSQL_USER: chef
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "chef", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - chef_game_net
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - chef_game_net
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  chef_game_net:
+    driver: bridge

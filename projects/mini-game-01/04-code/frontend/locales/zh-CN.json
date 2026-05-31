@@ -1,0 +1,168 @@
+{
+  "app": {
+    "name": "合合小厨神",
+    "slogan": "合成食材，烹饪中华美食！"
+  },
+  "loading": {
+    "tips": [
+      "番茄炒蛋是国民第一家常菜",
+      "麻婆豆腐的灵魂是花椒和豆瓣酱",
+      "好的高汤需要慢火炖 4 小时以上",
+      "不同菜系有各自的独特风味哦",
+      "拖拽相同食材可以合成升级",
+      "完成菜品后拖给顾客就能赚金币",
+      "升级餐厅可以解锁更多菜系"
+    ],
+    "checking": "正在检查更新...",
+    "loading_resources": "正在加载资源...",
+    "logging_in": "正在登录...",
+    "entering": "正在进入游戏...",
+    "timeout_message": "网络较慢，请检查网络后重试",
+    "retry": "重试",
+    "offline_mode": "跳过加载（离线模式）",
+    "version_check": "版本检查完成"
+  },
+  "home": {
+    "title": "餐厅",
+    "sell_mode": "卖出模式",
+    "sell_mode_tip": "点击食材直接卖出换金币",
+    "exit_sell": "退出卖出",
+    "board_full": "格子满了，卖出或合成腾出空间吧",
+    "not_enough_energy": "能量不足",
+    "ad_for_energy": "看广告获取 30 能量",
+    "merge_success": "合成成功！",
+    "serve_success": "上菜成功！",
+    "new_recipe": "解锁新菜谱：{name}",
+    "customer_leave": "{name} 生气地离开了",
+    "rating_up": "好评度提升！",
+    "rating_down": "好评度下降了"
+  },
+  "cookbook": {
+    "title": "菜谱图鉴",
+    "locked": "未解锁",
+    "hint": "继续合成探索吧",
+    "progress": "{current}/{total}",
+    "all_cuisines": "全部菜系",
+    "story": "菜品故事"
+  },
+  "upgrade": {
+    "title": "餐厅升级",
+    "current_level": "当前等级",
+    "next_level": "下一等级",
+    "condition_gold": "金币 {current}/{required}",
+    "condition_rating": "好评度 {current}/{required}⭐",
+    "upgrade_btn": "升级",
+    "upgrade_success": "恭喜升级为 {name}！",
+    "not_ready": "条件不满足",
+    "preview": "升级预览",
+    "unlock_list": "解锁内容",
+    "board_expand": "棋盘扩展至 {rows}×{cols}"
+  },
+  "leaderboard": {
+    "title": "排行榜",
+    "weekly": "周榜",
+    "total": "总榜",
+    "my_rank": "我的排名",
+    "no_rank": "暂无排名",
+    "rating": "{rating}⭐",
+    "level": "Lv.{level}",
+    "refresh": "下拉刷新",
+    "load_failed": "排行榜加载失败",
+    "invite_friends": "邀请好友来玩"
+  },
+  "friends": {
+    "title": "好友列表",
+    "visit": "拜访",
+    "like": "点赞",
+    "send_energy": "送能量",
+    "empty": "还没有好友在玩，快去邀请吧！",
+    "visit_today": "今日已拜访 {count}/{max} 次",
+    "inspiration_get": "获得了 {count} 灵感值！",
+    "like_success": "点赞成功",
+    "energy_sent": "已赠送 {count} 点能量"
+  },
+  "friend_restaurant": {
+    "title": "{name} 的餐厅",
+    "like_count": "{count} 个赞",
+    "visit_count": "{count} 次拜访",
+    "get_inspiration": "获取灵感值"
+  },
+  "inventory": {
+    "title": "背包",
+    "empty": "背包空空如也",
+    "use": "使用",
+    "count": "×{count}",
+    "confirm_use": "确定使用 {name} 吗？"
+  },
+  "settings": {
+    "title": "设置",
+    "sound": "音效",
+    "vibration": "震动",
+    "clear_cache": "清除缓存",
+    "cache_size": "缓存大小",
+    "feedback": "意见反馈",
+    "about": "关于",
+    "version": "版本 {version}",
+    "clear_cache_confirm": "确定清除缓存吗？本地数据不会丢失。",
+    "cleared": "缓存已清除"
+  },
+  "tutorial": {
+    "step1_title": "欢迎来到你的小摊！",
+    "step1_desc": "从一颗番茄开始你的厨神之路吧！食材会自动生成在棋盘上。",
+    "step2_title": "拖拽合成食材",
+    "step2_desc": "拖拽相同食材叠加到一起，就能合成更高级的食材！",
+    "step3_title": "完成菜品上菜",
+    "step3_desc": "做出菜品后，拖拽到上方顾客头像处就能上菜赚金币！",
+    "step4_title": "升级你的餐厅",
+    "step4_desc": "攒够金币和好评度后，快去升级餐厅，解锁更多美食！",
+    "step5_title": "收集菜谱图鉴",
+    "step5_desc": "看看你都收集了哪些菜？打开图鉴查看完整的中华美食谱！",
+    "step6_title": "邀请好友做客",
+    "step6_desc": "邀请好友来你的餐厅做客，互相拜访获取灵感值！",
+    "skip": "跳过引导",
+    "next": "下一步",
+    "done": "开始烹饪！"
+  },
+  "share": {
+    "title": "合合小厨神",
+    "recipe_share": "我在《合合小厨神》做出了【{name}】！",
+    "upgrade_share": "我的餐厅升级为【{name}】了！快来尝尝！",
+    "rank_share": "我在《合合小厨神》排第 {rank} 名（{rating}⭐）！"
+  },
+  "energy": {
+    "current": "{current}/{max}",
+    "recovering": "{time}后恢复 1 点",
+    "full": "能量已满",
+    "watch_ad": "看广告 +{amount}",
+    "daily_limit": "今日看广告次数已用完",
+    "ad_count": "今日剩余 {count} 次"
+  },
+  "gold": {
+    "earn": "+{amount}",
+    "spend": "-{amount}"
+  },
+  "order": {
+    "waiting": "等待中 {time}秒",
+    "urgent": "紧急！{time}秒",
+    "timeout": "已超时",
+    "completed": "已完成"
+  },
+  "common": {
+    "confirm": "确定",
+    "cancel": "取消",
+    "close": "关闭",
+    "back": "返回",
+    "loading": "加载中...",
+    "network_error": "网络连接失败",
+    "retry": "重试",
+    "ok": "好的",
+    "yes": "是",
+    "no": "否"
+  },
+  "error": {
+    "network": "网络连接失败，请检查网络",
+    "timeout": "请求超时，请重试",
+    "server": "服务器繁忙，请稍后再试",
+    "data_corrupted": "本地数据异常，已重置"
+  }
+}

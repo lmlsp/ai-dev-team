@@ -1,0 +1,394 @@
+[
+  {
+    "chainId": "tomato",
+    "name": "番茄",
+    "cuisine": "家常菜",
+    "unlockLevel": 1,
+    "goldValue": 5,
+    "steps": [
+      { "itemType": "tomato", "level": 0, "display": "番茄", "emoji": "🍅" },
+      { "itemType": "tomato", "level": 1, "display": "番茄块", "emoji": "🔴" },
+      { "itemType": "tomato", "level": 2, "display": "番茄酱", "emoji": "🥫" }
+    ]
+  },
+  {
+    "chainId": "egg",
+    "name": "鸡蛋",
+    "cuisine": "家常菜",
+    "unlockLevel": 1,
+    "goldValue": 5,
+    "steps": [
+      { "itemType": "egg", "level": 0, "display": "鸡蛋", "emoji": "🥚" },
+      { "itemType": "egg", "level": 1, "display": "蛋液", "emoji": "🟡" },
+      { "itemType": "egg", "level": 2, "display": "蛋皮", "emoji": "🟨" },
+      { "itemType": "egg", "level": 3, "display": "炒蛋", "emoji": "🍳" }
+    ]
+  },
+  {
+    "chainId": "tomato_egg_dish",
+    "name": "番茄炒蛋",
+    "cuisine": "家常菜",
+    "unlockLevel": 1,
+    "goldValue": 30,
+    "recipe": [
+      { "itemType": "tomato", "level": 2 },
+      { "itemType": "egg", "level": 3 }
+    ],
+    "result": { "itemType": "tomato_egg_dish", "level": 0, "display": "番茄炒蛋", "emoji": "🍲", "isTerminal": true, "story": "国民第一家常菜，酸甜可口人人爱" }
+  },
+  {
+    "chainId": "rice",
+    "name": "米饭",
+    "cuisine": "家常菜",
+    "unlockLevel": 1,
+    "goldValue": 3,
+    "steps": [
+      { "itemType": "rice", "level": 0, "display": "生米", "emoji": "🍚" },
+      { "itemType": "rice", "level": 1, "display": "米饭", "emoji": "🍚", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "flour",
+    "name": "面粉",
+    "cuisine": "家常菜",
+    "unlockLevel": 1,
+    "goldValue": 3,
+    "steps": [
+      { "itemType": "flour", "level": 0, "display": "小麦", "emoji": "🌾" },
+      { "itemType": "flour", "level": 1, "display": "面粉", "emoji": "🤍" },
+      { "itemType": "flour", "level": 2, "display": "面团", "emoji": "🍞" }
+    ]
+  },
+  {
+    "chainId": "noodle",
+    "name": "面条",
+    "cuisine": "家常菜",
+    "unlockLevel": 1,
+    "goldValue": 20,
+    "recipe": [
+      { "itemType": "flour", "level": 2 },
+      { "itemType": "egg", "level": 1 }
+    ],
+    "result": { "itemType": "noodle", "level": 0, "display": "鸡蛋面", "emoji": "🍜", "isTerminal": true, "story": "劲道爽滑的手工面" }
+  },
+  {
+    "chainId": "potato",
+    "name": "土豆",
+    "cuisine": "家常菜",
+    "unlockLevel": 1,
+    "goldValue": 5,
+    "steps": [
+      { "itemType": "potato", "level": 0, "display": "土豆", "emoji": "🥔" },
+      { "itemType": "potato", "level": 1, "display": "土豆丝", "emoji": "🟤" },
+      { "itemType": "potato", "level": 2, "display": "酸辣土豆丝", "emoji": "🥘", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "cabbage",
+    "name": "白菜",
+    "cuisine": "家常菜",
+    "unlockLevel": 1,
+    "goldValue": 5,
+    "steps": [
+      { "itemType": "cabbage", "level": 0, "display": "白菜", "emoji": "🥬" },
+      { "itemType": "cabbage", "level": 1, "display": "炒白菜", "emoji": "🥗", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "pepper",
+    "name": "辣椒",
+    "cuisine": "川菜",
+    "unlockLevel": 2,
+    "goldValue": 6,
+    "steps": [
+      { "itemType": "pepper", "level": 0, "display": "青椒", "emoji": "🌶️" },
+      { "itemType": "pepper", "level": 1, "display": "辣椒碎", "emoji": "🫑" },
+      { "itemType": "pepper", "level": 2, "display": "辣椒酱", "emoji": "🌶️" }
+    ]
+  },
+  {
+    "chainId": "tofu",
+    "name": "豆腐",
+    "cuisine": "川菜",
+    "unlockLevel": 2,
+    "goldValue": 6,
+    "steps": [
+      { "itemType": "soybean", "level": 0, "display": "黄豆", "emoji": "🫘" },
+      { "itemType": "soybean", "level": 1, "display": "豆浆", "emoji": "🥛" },
+      { "itemType": "tofu", "level": 0, "display": "豆腐", "emoji": "⬜" }
+    ]
+  },
+  {
+    "chainId": "mapo_tofu",
+    "name": "麻婆豆腐",
+    "cuisine": "川菜",
+    "unlockLevel": 2,
+    "goldValue": 40,
+    "recipe": [
+      { "itemType": "tofu", "level": 0 },
+      { "itemType": "pepper", "level": 2 }
+    ],
+    "result": { "itemType": "mapo_tofu", "level": 0, "display": "麻婆豆腐", "emoji": "🫕", "isTerminal": true, "story": "麻辣鲜香，川菜之魂" }
+  },
+  {
+    "chainId": "pork",
+    "name": "猪肉",
+    "cuisine": "川菜",
+    "unlockLevel": 2,
+    "goldValue": 8,
+    "steps": [
+      { "itemType": "pork", "level": 0, "display": "猪肉", "emoji": "🥩" },
+      { "itemType": "pork", "level": 1, "display": "肉丝", "emoji": "🍖" },
+      { "itemType": "pork", "level": 2, "display": "肉末", "emoji": "🟫" }
+    ]
+  },
+  {
+    "chainId": "yuxiang_rousi",
+    "name": "鱼香肉丝",
+    "cuisine": "川菜",
+    "unlockLevel": 2,
+    "goldValue": 45,
+    "recipe": [
+      { "itemType": "pork", "level": 1 },
+      { "itemType": "pepper", "level": 1 }
+    ],
+    "result": { "itemType": "yuxiang_rousi", "level": 0, "display": "鱼香肉丝", "emoji": "🍛", "isTerminal": true, "story": "没有鱼的鱼香，却有鱼的鲜" }
+  },
+  {
+    "chainId": "kungpao_chicken",
+    "name": "宫保鸡丁",
+    "cuisine": "川菜",
+    "unlockLevel": 2,
+    "goldValue": 45,
+    "steps": [
+      { "itemType": "chicken", "level": 0, "display": "鸡肉", "emoji": "🍗" },
+      { "itemType": "chicken", "level": 1, "display": "鸡丁", "emoji": "🍖" },
+      { "itemType": "kungpao_chicken", "level": 0, "display": "宫保鸡丁", "emoji": "🍲", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "dan_dan_noodle",
+    "name": "担担面",
+    "cuisine": "川菜",
+    "unlockLevel": 2,
+    "goldValue": 35,
+    "recipe": [
+      { "itemType": "noodle", "level": 0 },
+      { "itemType": "pork", "level": 2 }
+    ],
+    "result": { "itemType": "dan_dan_noodle", "level": 0, "display": "担担面", "emoji": "🍜", "isTerminal": true, "story": "四川名小吃，香辣够味" }
+  },
+  {
+    "chainId": "shuizhu_roupian",
+    "name": "水煮肉片",
+    "cuisine": "川菜",
+    "unlockLevel": 2,
+    "goldValue": 50,
+    "recipe": [
+      { "itemType": "pork", "level": 0 },
+      { "itemType": "pepper", "level": 2 }
+    ],
+    "result": { "itemType": "shuizhu_roupian", "level": 0, "display": "水煮肉片", "emoji": "🥘", "isTerminal": true, "story": "看似清淡，实则麻辣" }
+  },
+  {
+    "chainId": "shrimp",
+    "name": "虾",
+    "cuisine": "粤菜",
+    "unlockLevel": 3,
+    "goldValue": 10,
+    "steps": [
+      { "itemType": "shrimp", "level": 0, "display": "鲜虾", "emoji": "🦐" },
+      { "itemType": "shrimp", "level": 1, "display": "虾仁", "emoji": "🍤" }
+    ]
+  },
+  {
+    "chainId": "dimsum_shrimp",
+    "name": "虾饺",
+    "cuisine": "粤菜",
+    "unlockLevel": 3,
+    "goldValue": 45,
+    "recipe": [
+      { "itemType": "shrimp", "level": 1 },
+      { "itemType": "flour", "level": 2 }
+    ],
+    "result": { "itemType": "dimsum_shrimp", "level": 0, "display": "虾饺", "emoji": "🥟", "isTerminal": true, "story": "晶莹剔透的广式经典" }
+  },
+  {
+    "chainId": "rice_noodle",
+    "name": "米粉",
+    "cuisine": "粤菜",
+    "unlockLevel": 3,
+    "goldValue": 10,
+    "steps": [
+      { "itemType": "rice_noodle", "level": 0, "display": "米粉", "emoji": "🍝" },
+      { "itemType": "rice_noodle", "level": 1, "display": "炒河粉", "emoji": "🍲", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "char_siu",
+    "name": "叉烧",
+    "cuisine": "粤菜",
+    "unlockLevel": 3,
+    "goldValue": 50,
+    "steps": [
+      { "itemType": "pork_bbq", "level": 0, "display": "五花肉", "emoji": "🥓" },
+      { "itemType": "pork_bbq", "level": 1, "display": "腌制肉", "emoji": "🍖" },
+      { "itemType": "char_siu", "level": 0, "display": "叉烧", "emoji": "🥩", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "steamed_fish",
+    "name": "清蒸鱼",
+    "cuisine": "粤菜",
+    "unlockLevel": 3,
+    "goldValue": 55,
+    "steps": [
+      { "itemType": "fish", "level": 0, "display": "鲜鱼", "emoji": "🐟" },
+      { "itemType": "fish", "level": 1, "display": "处理好的鱼", "emoji": "🐟" },
+      { "itemType": "steamed_fish", "level": 0, "display": "清蒸鱼", "emoji": "🐠", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "soy_chicken",
+    "name": "豉油鸡",
+    "cuisine": "粤菜",
+    "unlockLevel": 3,
+    "goldValue": 55,
+    "recipe": [
+      { "itemType": "chicken", "level": 0 },
+      { "itemType": "soybean", "level": 1 }
+    ],
+    "result": { "itemType": "soy_chicken", "level": 0, "display": "豉油鸡", "emoji": "🍗", "isTerminal": true, "story": "广式烧腊经典之作" }
+  },
+  {
+    "chainId": "wonton",
+    "name": "云吞",
+    "cuisine": "粤菜",
+    "unlockLevel": 3,
+    "goldValue": 35,
+    "recipe": [
+      { "itemType": "shrimp", "level": 1 },
+      { "itemType": "flour", "level": 1 }
+    ],
+    "result": { "itemType": "wonton", "level": 0, "display": "云吞", "emoji": "🥟", "isTerminal": true, "story": "皮薄馅大的广东味道" }
+  },
+  {
+    "chainId": "fusion_rice",
+    "name": "蛋炒饭",
+    "cuisine": "创意融合菜",
+    "unlockLevel": 4,
+    "goldValue": 40,
+    "recipe": [
+      { "itemType": "rice", "level": 1 },
+      { "itemType": "egg", "level": 3 }
+    ],
+    "result": { "itemType": "fusion_rice", "level": 0, "display": "蛋炒饭", "emoji": "🍛", "isTerminal": true, "story": "最简单的菜才最见功夫" }
+  },
+  {
+    "chainId": "fusion_hotpot",
+    "name": "小火锅",
+    "cuisine": "创意融合菜",
+    "unlockLevel": 4,
+    "goldValue": 60,
+    "recipe": [
+      { "itemType": "pepper", "level": 2 },
+      { "itemType": "cabbage", "level": 0 }
+    ],
+    "result": { "itemType": "fusion_hotpot", "level": 0, "display": "麻辣小火锅", "emoji": "🫕", "isTerminal": true, "story": "一人食的快乐时光" }
+  },
+  {
+    "chainId": "fusion_dumpling",
+    "name": "饺子",
+    "cuisine": "创意融合菜",
+    "unlockLevel": 4,
+    "goldValue": 35,
+    "recipe": [
+      { "itemType": "flour", "level": 1 },
+      { "itemType": "pork", "level": 2 }
+    ],
+    "result": { "itemType": "fusion_dumpling", "level": 0, "display": "手工饺子", "emoji": "🥟", "isTerminal": true, "story": "好吃不过饺子" }
+  },
+  {
+    "chainId": "fusion_soup",
+    "name": "老火汤",
+    "cuisine": "创意融合菜",
+    "unlockLevel": 4,
+    "goldValue": 50,
+    "recipe": [
+      { "itemType": "pork_bbq", "level": 0 },
+      { "itemType": "cabbage", "level": 0 }
+    ],
+    "result": { "itemType": "fusion_soup", "level": 0, "display": "老火靓汤", "emoji": "🍵", "isTerminal": true, "story": "慢火细炖的精华" }
+  },
+  {
+    "chainId": "fusion_spring_roll",
+    "name": "春卷",
+    "cuisine": "创意融合菜",
+    "unlockLevel": 4,
+    "goldValue": 30,
+    "recipe": [
+      { "itemType": "flour", "level": 1 },
+      { "itemType": "cabbage", "level": 1 }
+    ],
+    "result": { "itemType": "fusion_spring_roll", "level": 0, "display": "炸春卷", "emoji": "🫔", "isTerminal": true, "story": "外酥里嫩的黄金卷" }
+  },
+  {
+    "chainId": "fusion_bbq_platter",
+    "name": "烧腊拼盘",
+    "cuisine": "创意融合菜",
+    "unlockLevel": 4,
+    "goldValue": 70,
+    "recipe": [
+      { "itemType": "char_siu", "level": 0 },
+      { "itemType": "soy_chicken", "level": 0 }
+    ],
+    "result": { "itemType": "fusion_bbq_platter", "level": 0, "display": "烧腊拼盘", "emoji": "🍱", "isTerminal": true, "story": "广式烧腊的豪华盛宴" }
+  },
+  {
+    "chainId": "secret_buddha_jumps_wall",
+    "name": "佛跳墙",
+    "cuisine": "隐藏菜谱",
+    "unlockLevel": 5,
+    "goldValue": 120,
+    "recipe": [
+      { "itemType": "shrimp", "level": 1 },
+      { "itemType": "pork_bbq", "level": 1 }
+    ],
+    "result": { "itemType": "secret_buddha_jumps_wall", "level": 0, "display": "佛跳墙", "emoji": "🏺", "isTerminal": true, "story": "坛启荤香飘四邻，佛闻弃禅跳墙来" }
+  },
+  {
+    "chainId": "secret_peking_duck",
+    "name": "北京烤鸭",
+    "cuisine": "隐藏菜谱",
+    "unlockLevel": 5,
+    "goldValue": 110,
+    "steps": [
+      { "itemType": "duck", "level": 0, "display": "鸭子", "emoji": "🦆" },
+      { "itemType": "duck", "level": 1, "display": "处理好的鸭", "emoji": "🦆" },
+      { "itemType": "secret_peking_duck", "level": 0, "display": "北京烤鸭", "emoji": "🍗", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "secret_lobster",
+    "name": "龙虾",
+    "cuisine": "隐藏菜谱",
+    "unlockLevel": 5,
+    "goldValue": 130,
+    "steps": [
+      { "itemType": "lobster", "level": 0, "display": "龙虾", "emoji": "🦞" },
+      { "itemType": "lobster", "level": 1, "display": "龙虾肉", "emoji": "🦞" },
+      { "itemType": "secret_lobster", "level": 0, "display": "上汤焗龙虾", "emoji": "🦞", "isTerminal": true }
+    ]
+  },
+  {
+    "chainId": "secret_crab",
+    "name": "大闸蟹",
+    "cuisine": "隐藏菜谱",
+    "unlockLevel": 5,
+    "goldValue": 100,
+    "steps": [
+      { "itemType": "crab", "level": 0, "display": "大闸蟹", "emoji": "🦀" },
+      { "itemType": "crab", "level": 1, "display": "清蒸大闸蟹", "emoji": "🦀", "isTerminal": true }
+    ]
+  }
+]

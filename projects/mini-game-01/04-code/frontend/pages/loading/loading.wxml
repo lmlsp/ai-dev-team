@@ -1,0 +1,34 @@
+<!--loading.wxml - 加载页-->
+<view class="loading-container">
+  <!-- 背景装饰 -->
+  <view class="loading-bg">
+    <text class="bg-emoji">🍳</text>
+  </view>
+
+  <!-- Logo 区域 -->
+  <view class="logo-area">
+    <text class="logo-emoji">👨‍🍳</text>
+    <text class="logo-title">合合小厨神</text>
+    <text class="logo-subtitle">合成食材，烹饪中华美食</text>
+  </view>
+
+  <!-- 进度条 -->
+  <view class="progress-area" wx:if="{{!showRetry}}">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{progress}}%"></view>
+    </view>
+    <text class="progress-text">{{loadingText || tip}}</text>
+    <text class="progress-percent">{{progress}}%</text>
+  </view>
+
+  <!-- 错误提示 -->
+  <view class="error-area" wx:if="{{showRetry}}">
+    <text class="error-icon">😞</text>
+    <text class="error-text">{{errorMessage}}</text>
+    <button class="btn-primary retry-btn" bindtap="onRetry">重试</button>
+    <button class="btn-ghost skip-btn" wx:if="{{showOffline}}" bindtap="onSkipOffline">跳过加载（离线模式）</button>
+  </view>
+
+  <!-- 版本号 -->
+  <text class="version-text">v1.0.0</text>
+</view>

@@ -1,0 +1,72 @@
+[
+  {
+    "level": 1,
+    "name": "街边小摊",
+    "description": "从街边小摊起步，迈出厨神第一步！",
+    "goldCost": 0,
+    "minRating": 0,
+    "boardRows": 6,
+    "boardCols": 5,
+    "unlockCuisines": ["家常菜"],
+    "unlockRecipeIds": ["tomato", "egg", "rice", "flour", "noodle", "potato", "cabbage", "tomato_egg_dish"],
+    "decorationSlots": 0,
+    "customerCount": 2,
+    "maxEnergy": 100
+  },
+  {
+    "level": 2,
+    "name": "小饭馆",
+    "description": "小饭馆开业，川菜来袭！",
+    "goldCost": 500,
+    "minRating": 3.5,
+    "boardRows": 6,
+    "boardCols": 5,
+    "unlockCuisines": ["家常菜", "川菜"],
+    "unlockRecipeIds": ["pepper", "soybean", "tofu", "mapo_tofu", "pork", "yuxiang_rousi", "kungpao_chicken", "dan_dan_noodle", "shuizhu_roupian"],
+    "decorationSlots": 2,
+    "customerCount": 3,
+    "maxEnergy": 100
+  },
+  {
+    "level": 3,
+    "name": "人气餐厅",
+    "description": "人气爆棚！粤菜师傅加入团队！",
+    "goldCost": 2000,
+    "minRating": 4.0,
+    "boardRows": 7,
+    "boardCols": 6,
+    "unlockCuisines": ["家常菜", "川菜", "粤菜"],
+    "unlockRecipeIds": ["shrimp", "dimsum_shrimp", "rice_noodle", "char_siu", "steamed_fish", "soy_chicken", "wonton"],
+    "decorationSlots": 4,
+    "customerCount": 4,
+    "maxEnergy": 100
+  },
+  {
+    "level": 4,
+    "name": "知名酒楼",
+    "description": "名震一方！创意融合菜惊艳登场！",
+    "goldCost": 5000,
+    "minRating": 4.5,
+    "boardRows": 7,
+    "boardCols": 6,
+    "unlockCuisines": ["家常菜", "川菜", "粤菜", "创意融合菜"],
+    "unlockRecipeIds": ["fusion_rice", "fusion_hotpot", "fusion_dumpling", "fusion_soup", "fusion_spring_roll", "fusion_bbq_platter"],
+    "decorationSlots": 6,
+    "customerCount": 5,
+    "maxEnergy": 100
+  },
+  {
+    "level": 5,
+    "name": "米其林星级",
+    "description": "米其林三星！你就是中华厨神！",
+    "goldCost": 10000,
+    "minRating": 5.0,
+    "boardRows": 7,
+    "boardCols": 6,
+    "unlockCuisines": ["家常菜", "川菜", "粤菜", "创意融合菜", "隐藏菜谱"],
+    "unlockRecipeIds": ["secret_buddha_jumps_wall", "secret_peking_duck", "secret_lobster", "secret_crab", "duck", "lobster", "crab"],
+    "decorationSlots": 8,
+    "customerCount": 5,
+    "maxEnergy": 100
+  }
+]
