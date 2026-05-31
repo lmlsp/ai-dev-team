@@ -1,4 +1,4 @@
-[
+module.exports = [
   {
     "level": 1,
     "name": "街边小摊",
@@ -69,4 +69,4 @@
     "customerCount": 5,
     "maxEnergy": 100
   }
-]
+];

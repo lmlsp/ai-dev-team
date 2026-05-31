@@ -129,7 +129,7 @@ Page({
     });
     // 同步餐厅名称
     try {
-      const levels = require('../../config/restaurant-levels.json');
+      const levels = require('../../config/restaurant-levels.js');
       const levelInfo = levels.find(l => l.level === state.restaurantLevel);
       if (levelInfo) {
         this.setData({ restaurantName: levelInfo.name, maxEnergy: levelInfo.maxEnergy || 100 });
@@ -194,7 +194,7 @@ Page({
     const unlockedIds = state.unlockedRecipes || [];
     const unlocked = [];
     try {
-      const recipes = require('../../config/recipes.json');
+      const recipes = require('../../config/recipes.js');
       for (const r of recipes) {
         if (unlockedIds.includes(r.chainId)) unlocked.push(r);
       }
@@ -1105,7 +1105,7 @@ Page({
     // 金币奖励（从菜谱配置获取）
     let goldEarned = 10;
     try {
-      const allRecipes = require('../../config/recipes.json');
+      const allRecipes = require('../../config/recipes.js');
       const recipe = allRecipes.find(r => {
         if (r.steps) {
           return r.steps.some(s => s.itemType === item.itemType && s.isTerminal);
@@ -1221,7 +1221,7 @@ Page({
     const unlockedIds = state.unlockedRecipes || [];
     const unlocked = [];
     try {
-      const recipes = require('../../config/recipes.json');
+      const recipes = require('../../config/recipes.js');
       for (const r of recipes) {
         if (unlockedIds.includes(r.chainId)) unlocked.push(r);
       }
@@ -1332,7 +1332,7 @@ Page({
   _checkNewRecipe(result) {
     if (!result) return;
     try {
-      const allRecipes = require('../../config/recipes.json');
+      const allRecipes = require('../../config/recipes.js');
       for (const r of allRecipes) {
         if (r.steps) {
           const last = r.steps[r.steps.length - 1];

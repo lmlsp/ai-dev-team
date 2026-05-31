@@ -3,7 +3,7 @@
  * 所有可见文案通过 t(key) 调用，当前语言 zh-CN
  * 后续添加语言只需新增 locales/xx-XX.json 文件即可
  */
-const zhCN = require('../locales/zh-CN.json');
+const zhCN = require('../locales/zh-CN.js');
 
 /** 当前语言 */
 let _lang = 'zh-CN';

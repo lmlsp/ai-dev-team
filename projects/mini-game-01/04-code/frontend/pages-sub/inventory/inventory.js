@@ -2,7 +2,7 @@
  * inventory.js — 道具背包（2列网格布局）
  * 数据来源：config/items.json + gameStore
  */
-const items = require('../../config/items.json');
+const items = require('../../config/items.js');
 const i18n = require('../../utils/i18n');
 
 Page({

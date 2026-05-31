@@ -2,7 +2,7 @@
  * MergeEngine.js — 合成规则引擎
  * 检查合成合法性、查询合成结果、加载菜谱配置
  */
-const recipes = require('../config/recipes.json');
+const recipes = require('../config/recipes.js');
 
 class MergeEngine {
   /** 初始化：构建快速查询索引 */

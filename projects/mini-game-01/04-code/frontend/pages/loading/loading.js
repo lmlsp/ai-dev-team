@@ -129,9 +129,9 @@ Page({
   async _loadResources() {
     // 预加载配置表
     try {
-      require('../../config/recipes.json');
-      require('../../config/restaurant-levels.json');
-      require('../../config/items.json');
+      require('../../config/recipes.js');
+      require('../../config/restaurant-levels.js');
+      require('../../config/items.js');
     } catch (e) {
       console.warn('[Loading] 配置加载失败', e);
     }

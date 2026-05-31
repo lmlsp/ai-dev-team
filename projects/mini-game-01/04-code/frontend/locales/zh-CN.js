@@ -1,4 +1,4 @@
-{
+module.exports = {
   "app": {
     "name": "合合小厨神",
     "slogan": "合成食材，烹饪中华美食！"
@@ -283,4 +283,4 @@
     "level_prefix": "Lv.",
     "rating_format": "{rating}⭐"
   }
-}
+};

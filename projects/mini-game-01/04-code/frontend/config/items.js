@@ -1,4 +1,4 @@
-[
+module.exports = [
   {
     "id": "speed_boost",
     "name": "加速药水",
@@ -53,4 +53,4 @@
     "effect": { "type": "double_luck", "chance": 0.3 },
     "maxStack": 5
   }
-]
+];

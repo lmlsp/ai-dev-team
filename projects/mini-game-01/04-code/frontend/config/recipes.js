@@ -1,4 +1,4 @@
-[
+module.exports = [
   {
     "chainId": "tomato",
     "name": "番茄",
@@ -391,4 +391,4 @@
       { "itemType": "crab", "level": 1, "display": "清蒸大闸蟹", "emoji": "🦀", "isTerminal": true }
     ]
   }
-]
+];

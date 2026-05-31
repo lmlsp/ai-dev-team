@@ -1,7 +1,7 @@
 /**
  * upgrade.js — 餐厅升级页
  */
-const levels = require('../../config/restaurant-levels.json');
+const levels = require('../../config/restaurant-levels.js');
 const i18n = require('../../utils/i18n');
 
 Page({

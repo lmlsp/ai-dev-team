@@ -4,7 +4,7 @@
  */
 const MergeEngine = require('../../engine/MergeEngine');
 const i18n = require('../../utils/i18n');
-const recipes = require('../../config/recipes.json');
+const recipes = require('../../config/recipes.js');
 
 Page({
   data: {

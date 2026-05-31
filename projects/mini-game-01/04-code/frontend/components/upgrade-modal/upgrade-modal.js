@@ -2,7 +2,7 @@
  * upgrade-modal — 升级弹窗组件
  * UI 设计 §4.8：蒙层渐变、缩放入场、解锁内容网格
  */
-const levels = require('../../config/restaurant-levels.json');
+const levels = require('../../config/restaurant-levels.js');
 const i18n = require('../../utils/i18n');
 
 /** 等级 → 表情映射 */
