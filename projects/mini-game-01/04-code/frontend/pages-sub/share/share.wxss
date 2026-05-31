@@ -1,0 +1,49 @@
+/* share.wxss - 分享页 */
+.share-container {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, #FFF8F0 0%, #FFE4C4 100%);
+  padding: 80rpx 40rpx 60rpx;
+  box-sizing: border-box;
+}
+
+.share-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60rpx;
+}
+.share-app-icon { font-size: 80rpx; margin-bottom: 16rpx; }
+.share-app-name { font-size: 44rpx; font-weight: 700; color: var(--color-primary); }
+.share-app-slogan {
+  font-size: var(--font-sm);
+  color: var(--color-text-light);
+  margin-top: 8rpx;
+}
+
+.share-card {
+  width: 100%;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 48rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 48rpx;
+}
+.share-card-emoji { font-size: 100rpx; margin-bottom: 20rpx; }
+.share-card-title { font-size: var(--font-sm); color: var(--color-text-light); }
+.share-card-name { font-size: var(--font-xxl); font-weight: 700; margin: 8rpx 0; }
+.share-card-desc { font-size: var(--font-sm); color: var(--color-text-light); margin-top: 12rpx; }
+
+.enter-btn {
+  width: 400rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: var(--font-lg);
+  font-weight: 600;
+}

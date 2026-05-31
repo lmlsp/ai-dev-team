@@ -1,0 +1,49 @@
+/* customer-card.wxss */
+.customer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 12rpx;
+  background: #fff;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  min-width: 160rpx;
+  position: relative;
+}
+.customer-card.completed { background: #E8F5E9; }
+.customer-card.timeout { background: #FFEBEE; opacity: 0.7; }
+.customer-card.urgent { border: 2rpx solid #FF4D4F; }
+
+.customer-avatar { font-size: 36rpx; margin-bottom: 4rpx; }
+.customer-name { font-size: var(--font-xs); color: var(--color-text); font-weight: 500; }
+.recipe-name {
+  font-size: var(--font-sm);
+  color: var(--color-primary);
+  font-weight: 600;
+  margin: 4rpx 0;
+  text-align: center;
+}
+
+.time-bar {
+  width: 100%;
+  height: 6rpx;
+  background: #f0f0f0;
+  border-radius: 3rpx;
+  overflow: hidden;
+  margin: 6rpx 0;
+}
+.time-fill {
+  height: 100%;
+  background: #4CAF50;
+  border-radius: 3rpx;
+  transition: width 1s linear;
+}
+.time-fill.urgent { background: #FF4D4F; }
+
+.status-text {
+  font-size: var(--font-xs);
+  color: var(--color-text-light);
+}
+.status-text.completed { color: #4CAF50; font-weight: 600; }
+.status-text.timeout { color: #FF4D4F; }
+.status-text.urgent { color: #FF4D4F; font-weight: 700; }

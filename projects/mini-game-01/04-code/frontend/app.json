@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/loading/loading",
-    "pages/home/home"
+    "pages/home/home",
+    "pages/tutorial/tutorial"
   ],
   "subPackages": [
     {

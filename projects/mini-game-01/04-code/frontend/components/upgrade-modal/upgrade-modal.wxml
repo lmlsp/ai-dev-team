@@ -1,0 +1,28 @@
+<!--upgrade-modal.wxml-->
+<view class="modal-overlay" wx:if="{{visible}}" bindtap="onCancel">
+  <view class="modal-content" catchtap="">
+    <text class="modal-title">🎉 餐厅升级</text>
+    <text class="modal-emoji" wx:if="{{nextInfo}}">
+      {{nextInfo.level === 2 ? '🏠' : nextInfo.level === 3 ? '🏪' : nextInfo.level === 4 ? '🏛️' : '👑'}}
+    </text>
+    <text class="modal-name" wx:if="{{nextInfo}}">{{nextInfo.name}}</text>
+    <text class="modal-desc" wx:if="{{nextInfo}}">{{nextInfo.description}}</text>
+
+    <!-- 条件 -->
+    <view class="modal-conditions" wx:if="{{nextInfo}}">
+      <view class="mc-item {{gold >= nextInfo.goldCost ? 'met' : ''}}">
+        <text>🪙 {{gold}}/{{nextInfo.goldCost}} 金币</text>
+      </view>
+      <view class="mc-item {{rating >= nextInfo.minRating ? 'met' : ''}}">
+        <text>⭐ {{rating}}/{{nextInfo.minRating}} 好评度</text>
+      </view>
+    </view>
+
+    <view class="modal-actions">
+      <button class="btn-secondary cancel-btn" bindtap="onCancel">暂不升级</button>
+      <button class="btn-primary confirm-btn" bindtap="onConfirm" disabled="{{!canUpgrade}}">
+        {{canUpgrade ? '确认升级' : '条件不足'}}
+      </button>
+    </view>
+  </view>
+</view>

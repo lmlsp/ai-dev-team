@@ -1,0 +1,28 @@
+<!--share.wxml - 分享结果页-->
+<view class="share-container">
+  <view class="share-hero">
+    <text class="share-app-icon">👨‍🍳</text>
+    <text class="share-app-name">合合小厨神</text>
+    <text class="share-app-slogan">合成食材，烹饪中华美食！</text>
+  </view>
+
+  <!-- 菜品分享 -->
+  <view class="share-card" wx:if="{{type === 'recipe'}}">
+    <text class="share-card-emoji">{{recipeEmoji}}</text>
+    <text class="share-card-title">解锁新菜品</text>
+    <text class="share-card-name">{{recipeName}}</text>
+    <text class="share-card-desc">快去游戏中查看完整合成公式吧！</text>
+  </view>
+
+  <!-- 餐厅升级分享 -->
+  <view class="share-card" wx:if="{{type === 'restaurant'}}">
+    <text class="share-card-emoji">{{level === 1 ? '🛒' : level === 2 ? '🏠' : level === 3 ? '🏪' : level === 4 ? '🏛️' : '👑'}}</text>
+    <text class="share-card-title">餐厅升级！</text>
+    <text class="share-card-name">{{levelName}}</text>
+    <text class="share-card-desc">Lv.{{level}} · 解锁更多美食和玩法！</text>
+  </view>
+
+  <button class="btn-primary enter-btn" bindtap="onEnterGame">
+    进入游戏
+  </button>
+</view>

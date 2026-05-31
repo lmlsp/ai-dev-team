@@ -1,0 +1,44 @@
+/* settings.wxss */
+.settings-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+.nav-bar {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24rpx;
+  background: #fff;
+  flex-shrink: 0;
+}
+.nav-back { width: 80rpx; }
+.back-icon { font-size: 40rpx; color: var(--color-text); }
+.nav-title { font-size: var(--font-lg); font-weight: 700; }
+.nav-placeholder { width: 80rpx; }
+
+.settings-content { flex: 1; padding: 24rpx; }
+
+.section { margin-bottom: 32rpx; }
+.section-title {
+  font-size: var(--font-xs);
+  color: var(--color-text-light);
+  margin-bottom: 12rpx;
+  padding-left: 8rpx;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 20rpx;
+  background: #fff;
+  border-radius: var(--radius-md);
+  margin-bottom: 4rpx;
+}
+.setting-label { font-size: var(--font-md); }
+.setting-value { font-size: var(--font-sm); color: var(--color-text-light); }
+.setting-arrow { font-size: 32rpx; color: #ccc; }

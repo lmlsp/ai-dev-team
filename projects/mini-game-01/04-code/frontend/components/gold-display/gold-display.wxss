@@ -1,0 +1,22 @@
+/* gold-display.wxss */
+.gold-display {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  padding: 4rpx 12rpx;
+  background: linear-gradient(135deg, #FFF8E1, #FFE082);
+  border-radius: 20rpx;
+}
+.gold-icon { font-size: 24rpx; }
+.gold-amount {
+  font-size: var(--font-sm);
+  font-weight: 700;
+  color: #8D6E00;
+}
+.gold-amount.animating {
+  animation: pulse 0.3s ease;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}

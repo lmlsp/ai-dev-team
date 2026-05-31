@@ -1,0 +1,15 @@
+<!--energy-bar.wxml-->
+<view class="energy-bar-container">
+  <view class="energy-header">
+    <text class="energy-icon">⚡</text>
+    <text class="energy-text">{{current}}/{{max}}</text>
+    <text class="energy-countdown" wx:if="{{countdownText}}">{{countdownText}}</text>
+    <text class="energy-full" wx:elif="{{isFull}}">已满</text>
+  </view>
+  <view class="energy-progress">
+    <view class="energy-fill {{percentage < 20 ? 'low' : ''}}" style="width: {{percentage}}%"></view>
+  </view>
+  <view class="energy-ad-btn" wx:if="{{!isFull && dailyAdRemaining > 0}}" bindtap="onWatchAd">
+    <text>看广告 +30⚡ (剩{{dailyAdRemaining}}次)</text>
+  </view>
+</view>

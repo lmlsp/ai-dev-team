@@ -1,0 +1,5 @@
+<!--ad-button.wxml-->
+<view class="ad-btn {{disabled || loading ? 'disabled' : ''}}" bindtap="onTap">
+  <text class="ad-btn-icon">{{icon}}</text>
+  <text class="ad-btn-label">{{loading ? '加载中...' : label}}</text>
+</view>

@@ -1,0 +1,45 @@
+<!--settings.wxml - 设置-->
+<view class="settings-container">
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack"><text class="back-icon">←</text></view>
+    <text class="nav-title">设置</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <scroll-view class="settings-content" scroll-y="true">
+    <!-- 通用设置 -->
+    <view class="section">
+      <text class="section-title">通用</text>
+      <view class="setting-item">
+        <text class="setting-label">🔊 音效</text>
+        <switch checked="{{soundOn}}" bindchange="onToggleSound" color="#FF6B35" />
+      </view>
+      <view class="setting-item">
+        <text class="setting-label">📳 震动</text>
+        <switch checked="{{vibrationOn}}" bindchange="onToggleVibration" color="#FF6B35" />
+      </view>
+    </view>
+
+    <!-- 存储 -->
+    <view class="section">
+      <text class="section-title">存储</text>
+      <view class="setting-item" bindtap="onClearCache">
+        <text class="setting-label">🗑️ 清除缓存</text>
+        <text class="setting-value">{{cacheSize}} KB</text>
+      </view>
+    </view>
+
+    <!-- 其他 -->
+    <view class="section">
+      <text class="section-title">其他</text>
+      <view class="setting-item" bindtap="onFeedback">
+        <text class="setting-label">💬 意见反馈</text>
+        <text class="setting-arrow">›</text>
+      </view>
+      <view class="setting-item">
+        <text class="setting-label">📋 关于</text>
+        <text class="setting-value">v1.0.0</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

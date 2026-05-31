@@ -1,0 +1,24 @@
+/* ad-button.wxss */
+.ad-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 24rpx;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  border-radius: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255,165,0,0.3);
+}
+.ad-btn:active {
+  transform: scale(0.95);
+  opacity: 0.85;
+}
+.ad-btn.disabled {
+  background: #e0e0e0;
+  box-shadow: none;
+}
+.ad-btn-icon { font-size: 24rpx; }
+.ad-btn-label {
+  font-size: var(--font-sm);
+  color: #fff;
+  font-weight: 600;
+}

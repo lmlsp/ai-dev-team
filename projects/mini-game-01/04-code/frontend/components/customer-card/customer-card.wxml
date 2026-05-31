@@ -1,0 +1,10 @@
+<!--customer-card.wxml-->
+<view class="customer-card {{statusClass}}" bindtap="onTap">
+  <text class="customer-avatar">{{customerAvatar}}</text>
+  <text class="customer-name">{{customerName}}</text>
+  <text class="recipe-name">{{recipeName || '等待中...'}}</text>
+  <view class="time-bar" wx:if="{{!completed && !timedOut}}">
+    <view class="time-fill {{urgent ? 'urgent' : ''}}" style="width: {{progressPercent}}%"></view>
+  </view>
+  <text class="status-text {{statusClass}}">{{statusText}}</text>
+</view>

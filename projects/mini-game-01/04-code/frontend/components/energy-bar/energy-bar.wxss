@@ -1,0 +1,42 @@
+/* energy-bar.wxss */
+.energy-bar-container {
+  padding: 12rpx 20rpx;
+  background: #fff;
+  border-radius: var(--radius-md);
+}
+.energy-header {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-bottom: 8rpx;
+}
+.energy-icon { font-size: 22rpx; }
+.energy-text { font-size: var(--font-sm); font-weight: 600; }
+.energy-countdown { font-size: var(--font-xs); color: var(--color-text-light); }
+.energy-full { font-size: var(--font-xs); color: #4CAF50; }
+
+.energy-progress {
+  height: 8rpx;
+  background: #f0f0f0;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+.energy-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFD700, #FFA500);
+  border-radius: 4rpx;
+  transition: width 0.5s;
+}
+.energy-fill.low {
+  background: linear-gradient(90deg, #FF4D4F, #FF6B35);
+}
+
+.energy-ad-btn {
+  margin-top: 10rpx;
+  text-align: center;
+  padding: 8rpx;
+  background: #FFF0E0;
+  border-radius: 20rpx;
+  font-size: var(--font-xs);
+  color: var(--color-primary);
+}
