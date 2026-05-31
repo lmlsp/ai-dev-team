@@ -1,10 +1,25 @@
-<!--customer-card.wxml-->
-<view class="customer-card {{statusClass}}" bindtap="onTap">
-  <text class="customer-avatar">{{customerAvatar}}</text>
-  <text class="customer-name">{{customerName}}</text>
-  <text class="recipe-name">{{recipeName || '等待中...'}}</text>
-  <view class="time-bar" wx:if="{{!completed && !timedOut}}">
-    <view class="time-fill {{urgent ? 'urgent' : ''}}" style="width: {{progressPercent}}%"></view>
+<!-- customer-card.wxml — UI 设计 §4.3 顾客卡片 -->
+<view class="customer-card {{statusClass}} {{showShake ? 'shake' : ''}}" bindtap="onTap">
+  <!-- 头像（48px 圆形） -->
+  <view class="customer-avatar">
+    <text>{{customerAvatar}}</text>
   </view>
-  <text class="status-text {{statusClass}}">{{statusText}}</text>
+
+  <!-- 顾客名 -->
+  <text class="customer-name">{{customerName}}</text>
+
+  <!-- 内容行 -->
+  <view class="card-content">
+    <!-- 圆形计时环（未完成且未超时） -->
+    <view class="countdown-ring {{progressDeg < 90 ? 'blink' : ''}}" wx:if="{{!completed && !timedOut}}">
+      <view class="countdown-circle" style="background: {{ringGradient}};"></view>
+      <text class="countdown-text">{{roundedRemaining}}s</text>
+    </view>
+
+    <!-- 菜品图标 -->
+    <text class="dish-emoji">{{recipeEmoji || '🍽️'}}</text>
+  </view>
+
+  <!-- 状态文字（已完成或超时） -->
+  <text class="status-text {{statusClass}}" wx:if="{{completed || timedOut}}">{{statusText}}</text>
 </view>

@@ -1,24 +1,72 @@
-/* ad-button.wxss */
+/* ad-button.wxss — UI 设计 §4.4 广告按钮 */
+@import '../../app.wxss';
+
+/* ========== 广告按钮容器 ========== */
 .ad-btn {
   display: flex;
   align-items: center;
-  gap: 8rpx;
-  padding: 12rpx 24rpx;
-  background: linear-gradient(135deg, #FFD700, #FFA500);
-  border-radius: 30rpx;
-  box-shadow: 0 4rpx 12rpx rgba(255,165,0,0.3);
+  justify-content: center;
+  width: 320rpx;               /* 160px */
+  height: 80rpx;               /* 40px */
+  background: var(--color-secondary, #FFB347);
+  border-radius: 40rpx;        /* 20px */
+  box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
+  transition: transform 0.1s ease-out, background 0.1s ease-out;
+  overflow: hidden;
 }
+
+/* 按下态 */
 .ad-btn:active {
-  transform: scale(0.95);
-  opacity: 0.85;
+  background: var(--color-secondary-dark, #E69520);
+  transform: scale(0.96);
 }
+
+/* 禁用态 */
 .ad-btn.disabled {
-  background: #e0e0e0;
+  background: var(--color-text-disabled, #C4B5AC);
   box-shadow: none;
 }
-.ad-btn-icon { font-size: 24rpx; }
+.ad-btn.disabled:active {
+  transform: none;
+}
+
+/* ========== 内容布局 ========== */
+.ad-btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+}
+
+/* ▶ 播放图标 */
+.ad-btn-icon {
+  font-size: 28rpx;           /* 14px */
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+/* 标签文字 — #FFFFFF / 12px Medium */
 .ad-btn-label {
-  font-size: var(--font-sm);
-  color: #fff;
-  font-weight: 600;
+  font-size: var(--font-caption-bold, 24rpx);  /* 12px */
+  font-weight: var(--weight-medium, 500);
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+/* ========== 加载态 — 旋转圆环 ========== */
+.ad-btn-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-ring {
+  width: 40rpx;               /* 20px */
+  height: 40rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  box-sizing: border-box;
 }

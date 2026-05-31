@@ -37,7 +37,7 @@
 .friend-avatar { font-size: 48rpx; }
 .friend-info { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
 .friend-name { font-size: var(--font-md); font-weight: 600; }
-.friend-restaurant { font-size: var(--font-xs); color: var(--color-text-light); }
+.friend-restaurant { font-size: var(--font-xs); color: var(--color-text-secondary); }
 .friend-rating { font-size: var(--font-xs); color: #FFD700; }
 .friend-actions { display: flex; flex-direction: column; gap: 8rpx; }
 .action-btn { font-size: 20rpx; padding: 4rpx 16rpx; }
@@ -53,12 +53,12 @@
   gap: 16rpx;
 }
 .empty-emoji { font-size: 80rpx; }
-.empty-text { font-size: var(--font-md); color: var(--color-text-light); }
+.empty-text { font-size: var(--font-md); color: var(--color-text-secondary); }
 
 .loading-state {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
 }

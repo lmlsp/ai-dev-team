@@ -1,8 +1,7 @@
 {
   "pages": [
     "pages/loading/loading",
-    "pages/home/home",
-    "pages/tutorial/tutorial"
+    "pages/home/home"
   ],
   "subPackages": [
     {
@@ -15,7 +14,8 @@
         "friend-restaurant/friend-restaurant",
         "inventory/inventory",
         "settings/settings",
-        "share/share"
+        "share/share",
+        "tutorial/tutorial"
       ]
     }
   ],
@@ -28,7 +28,7 @@
   "window": {
     "navigationStyle": "custom",
     "pageOrientation": "portrait",
-    "backgroundColor": "#FFF8F0",
+    "backgroundColor": "#FFF8F2",
     "backgroundTextStyle": "light"
   },
   "permission": {

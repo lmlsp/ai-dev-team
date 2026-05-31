@@ -1,49 +1,131 @@
-/* customer-card.wxss */
+/* customer-card.wxss — UI 设计 §4.3 顾客卡片 */
+@import '../../app.wxss';
+
+/* 卡片容器 — 200rpx × 260rpx */
 .customer-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 16rpx 12rpx;
-  background: #fff;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  min-width: 160rpx;
+  width: 200rpx;
+  height: 260rpx;
+  padding: var(--space-3) var(--space-2) var(--space-2);
+  background: var(--color-bg-card, #FFFFFF);
+  border-radius: var(--radius-md, 24rpx);
+  box-shadow: 0 4rpx 16rpx rgba(45, 24, 10, 0.08);
+  box-sizing: border-box;
   position: relative;
-}
-.customer-card.completed { background: #E8F5E9; }
-.customer-card.timeout { background: #FFEBEE; opacity: 0.7; }
-.customer-card.urgent { border: 2rpx solid #FF4D4F; }
-
-.customer-avatar { font-size: 36rpx; margin-bottom: 4rpx; }
-.customer-name { font-size: var(--font-xs); color: var(--color-text); font-weight: 500; }
-.recipe-name {
-  font-size: var(--font-sm);
-  color: var(--color-primary);
-  font-weight: 600;
-  margin: 4rpx 0;
-  text-align: center;
-}
-
-.time-bar {
-  width: 100%;
-  height: 6rpx;
-  background: #f0f0f0;
-  border-radius: 3rpx;
   overflow: hidden;
-  margin: 6rpx 0;
 }
-.time-fill {
-  height: 100%;
-  background: #4CAF50;
-  border-radius: 3rpx;
-  transition: width 1s linear;
-}
-.time-fill.urgent { background: #FF4D4F; }
 
-.status-text {
-  font-size: var(--font-xs);
-  color: var(--color-text-light);
+/* 已完成 */
+.customer-card.completed {
+  background: #E8F5E9;
 }
-.status-text.completed { color: #4CAF50; font-weight: 600; }
-.status-text.timeout { color: #FF4D4F; }
-.status-text.urgent { color: #FF4D4F; font-weight: 700; }
+
+/* 已超时 */
+.customer-card.timeout {
+  background: #FFEBEE;
+  opacity: 0.7;
+}
+
+/* 紧急抖动 — 低于 10s 时触发 */
+.customer-card.shake {
+  animation: shake 0.3s ease-in-out infinite;
+}
+
+/* ========== 头像区 ========== */
+.customer-avatar {
+  width: 96rpx;          /* 48px */
+  height: 96rpx;
+  border-radius: 50%;
+  background: var(--color-bg-board, #F5E6D8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-bottom: var(--space-1);
+}
+
+/* ========== 顾客名 ========== */
+.customer-name {
+  font-size: var(--font-caption-bold, 24rpx);
+  font-weight: var(--weight-medium, 500);
+  color: var(--color-text, #2C1810);
+  text-align: center;
+  margin-bottom: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ========== 内容行（计时环 + 菜品图标） ========== */
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  flex: 1;
+  width: 100%;
+}
+
+/* ========== 圆形计时环 ========== */
+.countdown-ring {
+  width: 72rpx;          /* 36px 外径 */
+  height: 72rpx;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* 环形背景由 conic-gradient 在 style 中动态设置 */
+.countdown-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* 环形中心文字 — 剩余秒数 */
+.countdown-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--font-mini, 20rpx);
+  font-weight: var(--weight-medium, 500);
+  color: var(--color-text, #2C1810);
+  line-height: 1;
+}
+
+/* 低时间闪烁 */
+.countdown-ring.blink .countdown-circle {
+  animation: blink 0.6s ease-in-out infinite;
+}
+
+/* ========== 菜品图标 ========== */
+.dish-emoji {
+  font-size: 48rpx;      /* 32px → 展示用字号稍大 */
+  width: 64rpx;          /* 32px */
+  text-align: center;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ========== 状态文字 ========== */
+.status-text {
+  font-size: var(--font-caption, 24rpx);
+  color: var(--color-text-secondary, #8B6F5F);
+  text-align: center;
+  margin-top: var(--space-1);
+}
+.status-text.completed {
+  color: var(--color-success, #4CAF50);
+  font-weight: var(--weight-medium, 500);
+}
+.status-text.timeout {
+  color: var(--color-danger, #FF5252);
+}

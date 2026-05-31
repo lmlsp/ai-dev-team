@@ -31,6 +31,10 @@ Page({
     energy: 100,
     maxEnergy: 100,
 
+    // 系统信息
+    statusBarHeight: 20,
+    safeAreaBottom: 0,
+
     // 订单区
     orders: [],
 
@@ -48,6 +52,13 @@ Page({
   onLoad() {
     const app = getApp();
     this.gameStore = app.gameStore;
+
+    // 系统信息（safe-area 适配）
+    const sysInfo = wx.getSystemInfoSync();
+    this.setData({
+      statusBarHeight: sysInfo.statusBarHeight || 20,
+      safeAreaBottom: sysInfo.safeAreaInsets ? sysInfo.safeAreaInsets.bottom : 0
+    });
 
     // 从 gameStore 同步初始状态
     this._syncFromStore();
@@ -223,6 +234,9 @@ Page({
       const t = types[Math.floor(Math.random() * types.length)];
       const idx = this.board.generateItem(t, 0);
       if (idx >= 0) {
+        // 记录生成动画（§5.6 食材生成动画 — 300ms 气泡冒出）
+        this._spawnItems = this._spawnItems || [];
+        this._spawnItems.push({ idx, startTime: Date.now(), duration: 300 });
         console.log('[Home] 自动生成食材:', t, '位置:', idx);
       }
     }, this._autoGenInterval);
@@ -424,8 +438,146 @@ Page({
       this.particles.draw(ctx);
     }
 
-    // 10. 更新订单倒计时
+    // 10. 绘制物品生成动画（§5.6 — 气泡冒出）
+    this._drawSpawnAnimations(ctx);
+
+    // 11. 绘制合成回弹动画（§7.1）
+    this._drawMergeBounce(ctx);
+
+    // 12. 绘制金币飘字 "+N"（§7.1）
+    this._drawGoldFloats(ctx);
+
+    // 13. 更新订单倒计时
     this._updateOrderTimers(delta);
+  },
+
+  /**
+   * 绘制物品生成动画 — 气泡从底部冒出（§5.6）
+   * translateY: +20px → -8px → 0, scale: 0.3 → 1.15 → 1.0, 300ms
+   */
+  _drawSpawnAnimations(ctx) {
+    if (!this._spawnItems || this._spawnItems.length === 0) return;
+    const now = Date.now();
+    const remaining = [];
+
+    for (const si of this._spawnItems) {
+      const elapsed = now - si.startTime;
+      if (elapsed >= si.duration) continue;
+
+      const progress = elapsed / si.duration;
+      // ease-out-back 模拟: cubic-bezier(0.34, 1.56, 0.64, 1)
+      const t = progress;
+      const ease = 1 - Math.pow(1 - t, 3);
+      const back = 1 + 1.56 * Math.sin(t * Math.PI) * (1 - t);
+
+      // translateY: +20 → -8 → 0
+      let ty;
+      if (progress < 0.5) {
+        ty = 20 * (1 - progress * 2); // 20→0 at midpoint
+      } else if (progress < 0.83) {
+        ty = -8 * ((progress - 0.5) / 0.33); // 0→-8 overshoot
+      } else {
+        ty = -8 * (1 - (progress - 0.83) / 0.17); // -8→0 settle
+      }
+
+      // scale: 0.3 → 1.15 → 1.0
+      let sc;
+      if (progress < 0.5) {
+        sc = 0.3 + 0.85 * (progress * 2);
+      } else {
+        sc = 1.15 - 0.15 * ((progress - 0.5) / 0.5);
+      }
+
+      // alpha: 0→1 (first 100ms)
+      const alpha = Math.min(1, progress * 3);
+
+      const cell = this.board.getCell(si.idx);
+      if (cell) {
+        const r = Math.floor(si.idx / this.board.cols);
+        const c = si.idx % this.board.cols;
+        const cellSize = this.cellSize;
+        const pad = CELL_PADDING;
+        const cx = this.boardOffsetX + c * (cellSize + pad) + pad;
+        const cy = this.boardOffsetY + r * (cellSize + pad) + pad;
+
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.translate(cx + cellSize / 2, cy + cellSize / 2 + ty);
+        ctx.scale(sc, sc);
+        ctx.translate(-(cx + cellSize / 2), -(cy + cellSize / 2));
+        this._drawItem(ctx, cell, cx, cy, cellSize, false);
+        ctx.restore();
+      }
+      remaining.push(si);
+    }
+    this._spawnItems = remaining;
+  },
+
+  /**
+   * 绘制合成回弹动画（§7.1 — 200ms ease-out-back）
+   */
+  _drawMergeBounce(ctx) {
+    if (!this._mergeBounceCells || this._mergeBounceCells.length === 0) return;
+    const now = Date.now();
+    const remaining = [];
+
+    for (const mb of this._mergeBounceCells) {
+      const elapsed = now - mb.startTime;
+      if (elapsed >= mb.duration) continue;
+
+      const progress = elapsed / mb.duration;
+      // ease-out-back: overshoot then settle
+      const scale = 1 + 0.15 * Math.sin(progress * Math.PI) * (1 - progress);
+
+      const cell = this.board.getCell(mb.idx);
+      if (cell) {
+        const r = Math.floor(mb.idx / this.board.cols);
+        const c = mb.idx % this.board.cols;
+        const cellSize = this.cellSize;
+        const pad = CELL_PADDING;
+        const cx = this.boardOffsetX + c * (cellSize + pad) + pad;
+        const cy = this.boardOffsetY + r * (cellSize + pad) + pad;
+
+        ctx.save();
+        ctx.translate(cx + cellSize / 2, cy + cellSize / 2);
+        ctx.scale(scale, scale);
+        ctx.translate(-(cx + cellSize / 2), -(cy + cellSize / 2));
+        this._drawItem(ctx, cell, cx, cy, cellSize, false);
+        ctx.restore();
+      }
+      remaining.push(mb);
+    }
+    this._mergeBounceCells = remaining;
+  },
+
+  /**
+   * 绘制金币飘字 "+N" 动画（§7.1 — 上飘 40px 后淡出，持续 1000ms）
+   */
+  _drawGoldFloats(ctx) {
+    if (!this._goldFloats || this._goldFloats.length === 0) return;
+    const now = Date.now();
+    const remaining = [];
+
+    for (const gf of this._goldFloats) {
+      const elapsed = (now - gf.startTime) / 1000;
+      if (elapsed >= gf.duration / 1000) continue;
+
+      const progress = elapsed / (gf.duration / 1000);
+      const alpha = 1 - progress;
+      const offsetY = -40 * progress; // 上飘 40px
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#FFB347';
+      ctx.font = 'bold 18px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('+' + gf.amount, gf.x, gf.y + offsetY);
+      ctx.restore();
+
+      remaining.push(gf);
+    }
+    this._goldFloats = remaining;
   },
 
   // ========== 绘制函数 ==========
@@ -435,22 +587,22 @@ Page({
     const w = this.canvasWidth;
     const h = ORDER_ZONE_HEIGHT;
 
-    // 订单区背景
-    ctx.fillStyle = '#FFF0E0';
+    // 订单区背景 — 暖白底
+    ctx.fillStyle = '#FFF8F2';
     ctx.fillRect(0, y, w, h);
-    // 底部阴影分割线
-    ctx.strokeStyle = '#E8D5C0';
-    ctx.lineWidth = 2;
+    // 底部分割线 — 暖灰
+    ctx.strokeStyle = '#EDE4DA';
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(0, y + h);
     ctx.lineTo(w, y + h);
     ctx.stroke();
 
     // 标题
-    ctx.fillStyle = '#999';
+    ctx.fillStyle = '#8B6F5F';
     ctx.font = '12px sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText('今日顾客', 12, y + 18);
+    ctx.fillText(i18n.t('home.today_customers') || '今日顾客', 12, y + 18);
 
     // 绘制顾客卡片
     const orders = this.orderManager ? this.orderManager.orders : [];
@@ -500,7 +652,7 @@ Page({
       ctx.fillText(order.customer.avatar || '👤', cx + cardWidth / 2, cy + 28);
 
       // 顾客名称
-      ctx.fillStyle = '#333';
+      ctx.fillStyle = '#2C1810';
       ctx.font = '12px sans-serif';
       ctx.fillText(order.customer.name || '顾客', cx + cardWidth / 2, cy + 48);
 
@@ -511,7 +663,7 @@ Page({
 
       // 倒计时
       const remaining = Math.ceil(order.remaining);
-      ctx.fillStyle = remaining < 15 ? '#F44336' : '#999';
+      ctx.fillStyle = remaining < 15 ? '#FF5252' : '#8B6F5F';
       ctx.font = '14px sans-serif';
       ctx.fillText('⏱' + remaining + 's', cx + cardWidth / 2, cy + 92);
 
@@ -521,9 +673,9 @@ Page({
       const barX = cx + 10;
       const barY = cy + 105;
       const progress = order.remaining / order.timeLimit;
-      ctx.fillStyle = '#E0E0E0';
+      ctx.fillStyle = '#EDE4DA';
       ctx.fillRect(barX, barY, barW, barH);
-      ctx.fillStyle = progress > 0.25 ? '#4CAF50' : '#F44336';
+      ctx.fillStyle = progress > 0.25 ? '#4CAF50' : '#FF5252';
       ctx.fillRect(barX, barY, barW * progress, barH);
     }
   },
@@ -534,14 +686,14 @@ Page({
     const w = this.boardPixelW + 8;
     const h = this.boardPixelH + 8;
 
-    // 木纹色背景
-    ctx.fillStyle = '#F5E6D3';
+    // 木纹色背景（§5.2 格子详细参数 — 底板颜色 #F5E6D8）
+    ctx.fillStyle = '#F5E6D8';
     this._roundRect(ctx, x, y, w, h, 12);
     ctx.fill();
 
-    // 边框
-    ctx.strokeStyle = '#D4C4A8';
-    ctx.lineWidth = 3;
+    // 暖灰分割线边框
+    ctx.strokeStyle = '#EDE4DA';
+    ctx.lineWidth = 2;
     this._roundRect(ctx, x, y, w, h, 12);
     ctx.stroke();
   },
@@ -557,20 +709,33 @@ Page({
         const cx = ox + c * (cellSize + pad) + pad;
         const cy = oy + r * (cellSize + pad) + pad;
 
-        // 格子背景
         const idx = r * this.board.cols + c;
         const hasItem = this.board.cells[idx] != null;
 
-        ctx.fillStyle = hasItem ? '#FFFDF7' : '#FFFAF5';
-        this._roundRect(ctx, cx, cy, cellSize, cellSize, 6);
-        ctx.fill();
-
-        // 空格子虚线暗示
-        if (!hasItem) {
-          ctx.strokeStyle = '#E8DDD0';
-          ctx.lineWidth = 1;
-          ctx.setLineDash([4, 4]);
-          this._roundRect(ctx, cx, cy, cellSize, cellSize, 6);
+        if (hasItem) {
+          // 有食材：白色底 + 柔阴影（§5.2）
+          ctx.fillStyle = '#FFFFFF';
+          this._roundRect(ctx, cx, cy, cellSize, cellSize, 8);
+          ctx.fill();
+          ctx.strokeStyle = '#EDE4DA';
+          ctx.lineWidth = 0.5;
+          this._roundRect(ctx, cx, cy, cellSize, cellSize, 8);
+          ctx.stroke();
+        } else {
+          // 空格子：底板色 + 内凹阴影效果（§4.1）
+          ctx.fillStyle = '#F5E6D8';
+          this._roundRect(ctx, cx, cy, cellSize, cellSize, 8);
+          ctx.fill();
+          // 内凹阴影模拟
+          ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+          ctx.lineWidth = 2;
+          this._roundRect(ctx, cx + 1, cy + 1, cellSize - 2, cellSize - 2, 8);
+          ctx.stroke();
+          // 虚线暗示（无网格线设计，但给出轻微视觉参考）
+          ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+          ctx.lineWidth = 0.5;
+          ctx.setLineDash([2, 6]);
+          this._roundRect(ctx, cx + 0.5, cy + 0.5, cellSize - 1, cellSize - 1, 8);
           ctx.stroke();
           ctx.setLineDash([]);
         }
@@ -600,48 +765,122 @@ Page({
   },
 
   /**
-   * 绘制单个食材
+   * 绘制单个食材（§4.1 / §4.2 等级视觉层级）
    */
-  _drawItem(ctx, item, cx, cy, size) {
+  _drawItem(ctx, item, cx, cy, size, isDragging) {
     if (!item) return;
 
     const info = MergeEngine.getItemInfo(item.itemType);
     const displayName = info ? info.display : item.itemType;
     const emoji = info ? info.emoji : '❓';
     const isTerminal = info && info.isTerminal;
+    const level = item.level || 0;
 
-    // 终端菜品特殊边框
-    if (isTerminal) {
-      ctx.strokeStyle = '#FFD700';
-      ctx.lineWidth = 2.5;
-      this._roundRect(ctx, cx + 1, cy + 1, size - 2, size - 2, 6);
-      ctx.stroke();
-    } else {
-      ctx.strokeStyle = '#E0D5C5';
+    // === 等级底衬绘制 ===
+    const baseSize = size * (0.6 + level * 0.05); // Lv.0: 60%, Lv.4: 80%
+    const baseCX = cx + size / 2;
+    const baseCY = cy + size / 2;
+
+    if (level >= 3) {
+      // Lv.3: 金色渐变圆底 + 发光（§4.2.1）
+      const grad = ctx.createRadialGradient(baseCX, baseCY, baseSize * 0.3, baseCX, baseCY, baseSize * 0.7);
+      grad.addColorStop(0, '#FFD700');
+      grad.addColorStop(1, '#FFB347');
+      ctx.fillStyle = grad;
+      ctx.shadowColor = 'rgba(255, 179, 71, 0.4)';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.arc(baseCX, baseCY, baseSize * 0.55, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    } else if (level >= 2) {
+      // Lv.2: 暖橙色圆底 + 细阴影（§4.2.1）
+      ctx.fillStyle = '#FFF3E0';
+      ctx.shadowColor = 'rgba(45, 24, 10, 0.12)';
+      ctx.shadowBlur = 4;
+      ctx.shadowOffsetY = 2;
+      ctx.beginPath();
+      ctx.arc(baseCX, baseCY, baseSize * 0.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowColor = 'transparent';
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetY = 0;
+    } else if (level >= 1) {
+      // Lv.1: 白色圆底 + 1px 浅边框（§4.2.1）
+      ctx.fillStyle = '#FFFFFF';
+      ctx.strokeStyle = '#EDE4DA';
       ctx.lineWidth = 1;
-      this._roundRect(ctx, cx + 1, cy + 1, size - 2, size - 2, 6);
+      ctx.beginPath();
+      ctx.arc(baseCX, baseCY, baseSize * 0.44, 0, Math.PI * 2);
+      ctx.fill();
       ctx.stroke();
     }
 
-    // Emoji 图标
-    const iconSize = Math.min(size * 0.45, 32);
+    // === 等级边框 ===
+    if (level >= 4) {
+      // Lv.4: 彩虹边框旋转（呼吸光晕）
+      ctx.strokeStyle = '#FF6B35';
+      ctx.lineWidth = 2;
+      ctx.shadowColor = 'rgba(255, 107, 53, 0.3)';
+      ctx.shadowBlur = 6;
+      this._roundRect(ctx, cx, cy, size, size, 8);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    } else if (level >= 3) {
+      // Lv.3: 金色虚线边框
+      ctx.strokeStyle = '#FFB347';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 3]);
+      this._roundRect(ctx, cx, cy, size, size, 8);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    } else if (level >= 2) {
+      // Lv.2: 边框渐变暖橙色
+      ctx.strokeStyle = '#FFB347';
+      ctx.lineWidth = 1.5;
+      this._roundRect(ctx, cx, cy, size, size, 8);
+      ctx.stroke();
+    } else if (isTerminal) {
+      // 终端菜品特殊金框
+      ctx.strokeStyle = '#FFD700';
+      ctx.lineWidth = 2;
+      this._roundRect(ctx, cx, cy, size, size, 8);
+      ctx.stroke();
+    } else if (level === 0 && !isDragging) {
+      // Lv.0: 微弱边框
+      ctx.strokeStyle = 'rgba(0,0,0,0.04)';
+      ctx.lineWidth = 0.5;
+      this._roundRect(ctx, cx, cy, size, size, 8);
+      ctx.stroke();
+    }
+
+    // === Emoji 图标 ===
+    const iconSize = Math.min(size * 0.48, 36);
     ctx.font = `${iconSize}px sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(emoji, cx + size / 2, cy + size * 0.38);
+    ctx.fillText(emoji, cx + size / 2, cy + size * 0.4);
 
-    // 物品名称
-    ctx.fillStyle = '#333';
-    const fontSize = Math.min(size * 0.15, 12);
-    ctx.font = `${fontSize}px sans-serif`;
-    ctx.fillText(displayName, cx + size / 2, cy + size * 0.72);
+    // === 物品名称 ===
+    ctx.fillStyle = '#2C1810';
+    const fontSize = Math.min(size * 0.14, 11);
+    ctx.font = `400 ${fontSize}px sans-serif`;
+    ctx.fillText(displayName, cx + size / 2, cy + size * 0.73);
 
-    // 等级标记
-    if (item.level > 0) {
+    // === 等级角标（右下角 §4.2.1）===
+    if (level >= 1) {
+      const badgeR = Math.min(size * 0.13, 8);
+      const badgeX = cx + size - badgeR - 2;
+      const badgeY = cy + size - badgeR - 2;
       ctx.fillStyle = '#FF6B35';
-      const lvlSize = Math.min(size * 0.1, 8);
-      ctx.font = `${lvlSize}px sans-serif`;
-      ctx.fillText('Lv.' + item.level, cx + size / 2, cy + size * 0.88);
+      ctx.beginPath();
+      ctx.arc(badgeX, badgeY, badgeR, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = `700 ${badgeR * 1.2}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(level, badgeX, badgeY);
     }
   },
 
@@ -657,17 +896,23 @@ Page({
     const cx = this.boardOffsetX + c * (cellSize + pad) + pad;
     const cy = this.boardOffsetY + r * (cellSize + pad) + pad;
 
-    // 高亮框
-    ctx.strokeStyle = '#FFD700';
-    ctx.lineWidth = 3;
-    ctx.setLineDash([]);
-    this._roundRect(ctx, cx - 1, cy - 1, cellSize + 2, cellSize + 2, 8);
-    ctx.stroke();
+    // 高亮背景 #FFF0E8（§4.1 可合成高亮）
+    ctx.fillStyle = 'rgba(255, 240, 232, 0.7)';
+    this._roundRect(ctx, cx, cy, cellSize, cellSize, 8);
+    ctx.fill();
 
-    // 发光效果
-    ctx.strokeStyle = 'rgba(255, 215, 0, 0.3)';
-    ctx.lineWidth = 6;
-    this._roundRect(ctx, cx - 3, cy - 3, cellSize + 6, cellSize + 6, 10);
+    // 橙色虚线边框 #FF6B35
+    ctx.strokeStyle = '#FF6B35';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 3]);
+    this._roundRect(ctx, cx, cy, cellSize, cellSize, 8);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // 发光外扩
+    ctx.strokeStyle = 'rgba(255, 107, 53, 0.2)';
+    ctx.lineWidth = 5;
+    this._roundRect(ctx, cx - 2, cy - 2, cellSize + 4, cellSize + 4, 10);
     ctx.stroke();
   },
 
@@ -675,19 +920,49 @@ Page({
     const ds = this.dragHandler ? this.dragHandler.dragState : null;
     if (!ds || !ds.item) return;
 
-    const size = this.cellSize * 1.1;
+    const size = this.cellSize * 1.1; // 放大 1.1x（§5.4）
     const x = ds.currentX - size / 2;
-    const y = ds.currentY - size / 2;
+    // 手指上方偏移 10px 防止遮挡（§5.4）
+    const y = ds.currentY - size / 2 - 10;
 
     ctx.save();
-    ctx.globalAlpha = 0.8;
-    // 阴影
-    ctx.shadowColor = 'rgba(0,0,0,0.2)';
-    ctx.shadowBlur = 8;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
+    ctx.globalAlpha = 0.85; // 半透明（§5.4）
 
-    this._drawItem(ctx, ds.item, x, y, size);
+    // 阴影（§5.4）
+    ctx.shadowColor = 'rgba(45, 24, 10, 0.2)';
+    ctx.shadowBlur = 16;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 4;
+
+    // 微旋转 ±5°（§5.4）— 基于拖拽方向
+    if (ds.currentX !== ds.startX && ds.currentY !== ds.startY) {
+      const dx = ds.currentX - ds.startX;
+      const maxRot = (Math.PI / 36); // 5°
+      const rot = Math.max(-maxRot, Math.min(maxRot, dx * 0.005));
+      ctx.translate(ds.currentX, ds.currentY - 10);
+      ctx.rotate(rot);
+      ctx.translate(-ds.currentX, -(ds.currentY - 10));
+    }
+
+    this._drawItem(ctx, ds.item, x, y, size, true);
+
+    // 源格虚线框（§4.1 被拖拽中）
+    if (ds.fromIdx >= 0) {
+      const r = Math.floor(ds.fromIdx / this.board.cols);
+      const c = ds.fromIdx % this.board.cols;
+      const cellSize = this.cellSize;
+      const pad = CELL_PADDING;
+      const srcX = this.boardOffsetX + c * (cellSize + pad) + pad;
+      const srcY = this.boardOffsetY + r * (cellSize + pad) + pad;
+      ctx.globalAlpha = 0.4;
+      ctx.strokeStyle = '#C4B5AC';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 4]);
+      this._roundRect(ctx, srcX, srcY, cellSize, cellSize, 8);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
     ctx.restore();
   },
 
@@ -757,16 +1032,26 @@ Page({
     };
     this.board.placeItem(toIdx, newItem);
 
-    // 粒子特效
+    // 触觉反馈：合成成功 medium 振动（§8.3）
+    wx.vibrateShort({ type: 'medium' });
+
+    // 粒子特效（§5.5）
     if (this.particles) {
       const pos = this.dragHandler ? this.dragHandler.getCellCenter(toIdx) : null;
       if (pos) {
-        this.particles.emit('merge', pos.x, pos.y);
+        // Lv.3+ 合成使用增强粒子
+        const resultLevel = result.level || 0;
+        const particleType = resultLevel >= 3 ? 'merge_lv3' : 'merge';
+        this.particles.emit(particleType, pos.x, pos.y);
       }
     }
 
     // 检查是否解锁新菜谱
     this._checkNewRecipe(result);
+
+    // 合成成功回弹动画记录
+    this._mergeBounceCells = this._mergeBounceCells || [];
+    this._mergeBounceCells.push({ idx: toIdx, startTime: Date.now(), duration: 200 });
 
     // 通知游戏状态
     this._showToast(i18n.t('home.merge_success'));
@@ -823,11 +1108,24 @@ Page({
     this.gameStore.addGold(goldEarned);
     this.gameStore.updateRating(0.05);
 
+    // 触觉反馈：上菜成功 light 振动（§8.3）
+    wx.vibrateShort({ type: 'light' });
+
     // 粒子特效
     if (this.particles) {
       const pos = { x: this.canvasWidth / 2, y: this.orderZoneY + ORDER_ZONE_HEIGHT / 2 };
       this.particles.emit('serve', pos.x, pos.y);
     }
+
+    // 金币飘字动画 "+N"
+    this._goldFloats = this._goldFloats || [];
+    this._goldFloats.push({
+      amount: goldEarned,
+      x: this.canvasWidth / 2,
+      y: this.orderZoneY + ORDER_ZONE_HEIGHT / 2,
+      startTime: Date.now(),
+      duration: 1000
+    });
 
     this._showToast('+' + goldEarned + ' 金币！');
     this.setData({ gold: this.gameStore.get('gold'), rating: this.gameStore.get('rating') });

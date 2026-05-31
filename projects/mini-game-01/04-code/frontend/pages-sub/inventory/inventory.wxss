@@ -1,4 +1,4 @@
-/* inventory.wxss */
+/* inventory.wxss — 道具背包（2列网格） */
 .inv-container {
   width: 100vw;
   height: 100vh;
@@ -6,47 +6,96 @@
   flex-direction: column;
   background: var(--color-bg);
 }
+
+/* ===== 导航栏 ===== */
 .nav-bar {
   height: 88rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24rpx;
-  background: #fff;
+  padding: 0 var(--space-3);
+  background: var(--color-bg-card);
   flex-shrink: 0;
 }
-.nav-back { width: 80rpx; }
-.back-icon { font-size: 40rpx; color: var(--color-text); }
-.nav-title { font-size: var(--font-lg); font-weight: 700; }
-.nav-placeholder { width: 80rpx; }
-
-.inv-list { flex: 1; padding: 16rpx 24rpx; }
-.inv-item {
+.nav-back {
+  width: 80rpx;
+  height: 80rpx;
   display: flex;
   align-items: center;
-  padding: 24rpx 20rpx;
-  background: #fff;
-  border-radius: var(--radius-md);
-  margin-bottom: 12rpx;
-  box-shadow: var(--shadow-sm);
-  gap: 16rpx;
+  justify-content: flex-start;
 }
-.inv-icon { font-size: 48rpx; }
-.inv-info { flex: 1; display: flex; flex-direction: column; gap: 4rpx; }
-.inv-name { font-size: var(--font-md); font-weight: 600; }
-.inv-desc { font-size: var(--font-xs); color: var(--color-text-light); }
-.inv-right { display: flex; flex-direction: column; align-items: center; gap: 8rpx; }
-.inv-count { font-size: var(--font-sm); font-weight: 600; color: var(--color-primary); }
-.use-btn { background: var(--color-primary); color: #fff; }
+.back-icon { font-size: 40rpx; color: var(--color-text); }
+.nav-title { font-size: var(--font-body-bold); font-weight: var(--weight-bold); color: var(--color-text); }
+.nav-placeholder { width: 80rpx; }
 
+/* ===== 2列网格 ===== */
+.inv-grid-wrapper {
+  flex: 1;
+  padding: var(--space-3);
+  box-sizing: border-box;
+}
+.inv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+/* ===== 道具卡片 340rpx x 200rpx ===== */
+.inv-item-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-2);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  min-height: 200rpx;
+  box-sizing: border-box;
+}
+.item-icon-wrap {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-1);
+}
+.item-icon { font-size: 48rpx; }
+.item-name {
+  font-size: var(--font-caption-bold);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: var(--space-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.item-count {
+  font-size: var(--font-body-bold);
+  font-weight: var(--weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+.use-btn {
+  width: 140rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  font-size: var(--font-caption);
+  border-radius: var(--radius-lg);
+}
+
+/* ===== 空状态 ===== */
 .empty-state {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12rpx;
+  gap: var(--space-2);
 }
 .empty-emoji { font-size: 80rpx; }
-.empty-text { font-size: var(--font-md); color: var(--color-text-light); }
-.empty-hint { font-size: var(--font-xs); color: #ccc; }
+.empty-text { font-size: var(--font-body); color: var(--color-text-secondary); }
+.empty-hint { font-size: var(--font-caption); color: var(--color-text-disabled); }

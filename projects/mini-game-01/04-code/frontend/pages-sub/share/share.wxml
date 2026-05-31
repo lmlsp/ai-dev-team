@@ -1,28 +1,64 @@
-<!--share.wxml - 分享结果页-->
+<!--share.wxml - 分享结果页（分享卡片）-->
 <view class="share-container">
-  <view class="share-hero">
-    <text class="share-app-icon">👨‍🍳</text>
-    <text class="share-app-name">合合小厨神</text>
-    <text class="share-app-slogan">合成食材，烹饪中华美食！</text>
+  <!-- 导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="onBack"><text class="back-icon">←</text></view>
+    <text class="nav-title">合合小厨神</text>
+    <view class="nav-placeholder"></view>
   </view>
 
-  <!-- 菜品分享 -->
-  <view class="share-card" wx:if="{{type === 'recipe'}}">
-    <text class="share-card-emoji">{{recipeEmoji}}</text>
-    <text class="share-card-title">解锁新菜品</text>
-    <text class="share-card-name">{{recipeName}}</text>
-    <text class="share-card-desc">快去游戏中查看完整合成公式吧！</text>
-  </view>
+  <scroll-view class="share-content" scroll-y="true" wx:if="{{cardReady}}">
+    <!-- 分享卡片 640rpx x 840rpx -->
+    <view class="share-card" id="shareCard">
+      <!-- 卡片头部 -->
+      <view class="card-header">
+        <text class="card-badge">🎉</text>
+        <text class="card-title">我合成了一道稀有菜！</text>
+      </view>
 
-  <!-- 餐厅升级分享 -->
-  <view class="share-card" wx:if="{{type === 'restaurant'}}">
-    <text class="share-card-emoji">{{level === 1 ? '🛒' : level === 2 ? '🏠' : level === 3 ? '🏪' : level === 4 ? '🏛️' : '👑'}}</text>
-    <text class="share-card-title">餐厅升级！</text>
-    <text class="share-card-name">{{levelName}}</text>
-    <text class="share-card-desc">Lv.{{level}} · 解锁更多美食和玩法！</text>
-  </view>
+      <!-- 中间：菜品/餐厅图示 -->
+      <view class="card-body">
+        <block wx:if="{{type === 'recipe'}}">
+          <text class="card-emoji">{{recipeEmoji}}</text>
+          <text class="card-food-name">{{recipeName}}</text>
+        </block>
+        <block wx:if="{{type === 'restaurant'}}">
+          <text class="card-emoji">{{level === 1 ? '🛒' : level === 2 ? '🏠' : level === 3 ? '🏪' : level === 4 ? '🏛️' : '👑'}}</text>
+          <text class="card-food-name">{{levelName}}</text>
+        </block>
+      </view>
 
-  <button class="btn-primary enter-btn" bindtap="onEnterGame">
-    进入游戏
-  </button>
+      <!-- 餐厅信息 -->
+      <view class="card-restaurant-info">
+        <text class="card-restaurant-name">🏠 {{restaurantName}} Lv.{{level}}</text>
+        <text class="card-rating">⭐ 好评度 {{rating}}</text>
+      </view>
+
+      <!-- 分割线 -->
+      <view class="card-divider"></view>
+
+      <!-- CTA -->
+      <view class="card-cta">
+        <text class="cta-text">来我的餐厅尝尝？</text>
+      </view>
+    </view>
+
+    <!-- 按钮行 -->
+    <view class="share-actions">
+      <button class="btn-secondary share-btn" bindtap="onShareToFriend">
+        📤 分享给好友
+      </button>
+      <button class="btn-primary share-btn" bindtap="onSaveImage" disabled="{{saving}}">
+        💾 保存图片
+      </button>
+    </view>
+
+    <!-- 底部安全区 -->
+    <view class="safe-area-bottom"></view>
+  </scroll-view>
+
+  <!-- 加载态 -->
+  <view class="loading-state" wx:if="{{!cardReady}}">
+    <text class="loading-text">加载中...</text>
+  </view>
 </view>

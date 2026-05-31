@@ -1,28 +1,30 @@
-<!--inventory.wxml - 背包-->
+<!--inventory.wxml - 道具背包（2列网格）-->
 <view class="inv-container">
+  <!-- 导航栏 -->
   <view class="nav-bar">
     <view class="nav-back" bindtap="onBack"><text class="back-icon">←</text></view>
     <text class="nav-title">背包</text>
     <view class="nav-placeholder"></view>
   </view>
 
-  <scroll-view class="inv-list" scroll-y="true" wx:if="{{!empty}}">
-    <view class="inv-item" wx:for="{{items}}" wx:key="id">
-      <text class="inv-icon">{{item.icon}}</text>
-      <view class="inv-info">
-        <text class="inv-name">{{item.name}}</text>
-        <text class="inv-desc">{{item.description}}</text>
-      </view>
-      <view class="inv-right">
-        <text class="inv-count">×{{item.count}}</text>
-        <button class="use-btn" data-id="{{item.id}}" bindtap="onUseItem" size="mini">使用</button>
+  <!-- 道具网格 2列 -->
+  <scroll-view class="inv-grid-wrapper" scroll-y="true" wx:if="{{!empty}}">
+    <view class="inv-grid">
+      <view class="inv-item-card" wx:for="{{items}}" wx:key="id" data-id="{{item.id}}">
+        <view class="item-icon-wrap">
+          <text class="item-icon">{{item.icon}}</text>
+        </view>
+        <text class="item-name">{{item.name}}</text>
+        <text class="item-count">×{{item.count}}</text>
+        <button class="btn-sm use-btn" data-id="{{item.id}}" bindtap="onUseItem">使用</button>
       </view>
     </view>
   </scroll-view>
 
+  <!-- 空状态 -->
   <view class="empty-state" wx:if="{{empty}}">
     <text class="empty-emoji">🎒</text>
     <text class="empty-text">背包空空如也</text>
-    <text class="empty-hint">完成订单和升级可获得道具奖励</text>
+    <text class="empty-hint">还没有道具，去完成订单获取吧</text>
   </view>
 </view>

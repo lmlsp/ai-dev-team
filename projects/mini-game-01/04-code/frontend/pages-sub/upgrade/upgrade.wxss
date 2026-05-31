@@ -34,7 +34,7 @@
 }
 .section-title {
   font-size: var(--font-sm);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
   margin-bottom: 16rpx;
 }
 .level-display {
@@ -54,7 +54,7 @@
 }
 .level-desc {
   font-size: var(--font-sm);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
 }
 .next-level-card {
   border: 2rpx dashed var(--color-primary);
@@ -118,4 +118,4 @@
   padding: 100rpx 0;
 }
 .max-emoji { font-size: 120rpx; margin-bottom: 24rpx; }
-.max-text { font-size: var(--font-lg); color: var(--color-text-light); }
+.max-text { font-size: var(--font-lg); color: var(--color-text-secondary); }

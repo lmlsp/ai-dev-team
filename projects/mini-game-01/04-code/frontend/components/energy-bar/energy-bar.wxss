@@ -1,42 +1,105 @@
-/* energy-bar.wxss */
+/* energy-bar.wxss — UI 设计 §4.5 能量条 */
+@import '../../app.wxss';
+
 .energy-bar-container {
-  padding: 12rpx 20rpx;
-  background: #fff;
-  border-radius: var(--radius-md);
-}
-.energy-header {
   display: flex;
   align-items: center;
-  gap: 8rpx;
-  margin-bottom: 8rpx;
-}
-.energy-icon { font-size: 22rpx; }
-.energy-text { font-size: var(--font-sm); font-weight: 600; }
-.energy-countdown { font-size: var(--font-xs); color: var(--color-text-light); }
-.energy-full { font-size: var(--font-xs); color: #4CAF50; }
-
-.energy-progress {
-  height: 8rpx;
-  background: #f0f0f0;
-  border-radius: 4rpx;
-  overflow: hidden;
-}
-.energy-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #FFD700, #FFA500);
-  border-radius: 4rpx;
-  transition: width 0.5s;
-}
-.energy-fill.low {
-  background: linear-gradient(90deg, #FF4D4F, #FF6B35);
+  gap: var(--space-2);
 }
 
-.energy-ad-btn {
-  margin-top: 10rpx;
-  text-align: center;
-  padding: 8rpx;
-  background: #FFF0E0;
+/* 能量条轨道 — 240rpx × 40rpx 全圆角 */
+.energy-track {
+  position: relative;
+  width: 240rpx;
+  height: 40rpx;
+  background: var(--color-divider, #EDE4DA);
   border-radius: 20rpx;
-  font-size: var(--font-xs);
-  color: var(--color-primary);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* 低能量时整个轨道闪烁 */
+.energy-track.low {
+  animation: blink 0.6s ease-in-out infinite;
+}
+
+/* 填充条 — 默认橙金渐变 */
+.energy-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary, #FF6B35) 0%, var(--color-secondary, #FFB347) 100%);
+  border-radius: 20rpx;
+  transition: width 0.5s ease;
+}
+
+/* 低能量时填充变为纯红色 */
+.energy-fill.low {
+  background: var(--color-danger, #FF5252);
+}
+
+/* 流光边缘 — 右侧 shimmer 动效 */
+.shimmer-edge {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 48rpx;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 0 20rpx 20rpx 0;
+}
+
+/* ⚡ 图标 — 居中于 40rpx 高度 */
+.energy-icon {
+  position: absolute;
+  left: 8rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28rpx;
+  line-height: 1;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 数字 — 右侧展示 */
+.energy-number {
+  position: absolute;
+  right: 12rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28rpx;      /* 14px */
+  font-weight: var(--weight-medium, 500);
+  color: var(--color-text, #2C1810);
+  z-index: 1;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* "+" 广告按钮 — 小型橙色圆形 */
+.energy-add-btn {
+  width: 40rpx;
+  height: 40rpx;
+  background: var(--color-secondary, #FFB347);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-h3, 36rpx);
+  color: #FFFFFF;
+  font-weight: var(--weight-bold, 700);
+  line-height: 1;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+.energy-add-btn:active {
+  background: var(--color-secondary-dark, #E69520);
+  transform: scale(0.92);
 }

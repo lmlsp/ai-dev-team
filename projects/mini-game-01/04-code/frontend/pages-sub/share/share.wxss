@@ -1,49 +1,158 @@
-/* share.wxss - 分享页 */
+/* share.wxss — 分享结果页 */
 .share-container {
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #FFF8F2 0%, #FFE8D6 100%);
+}
+
+/* ===== 导航栏 ===== */
+.nav-bar {
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3);
+  background: transparent;
+  flex-shrink: 0;
+}
+.nav-back {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.back-icon { font-size: 40rpx; color: var(--color-text); }
+.nav-title { font-size: var(--font-body-bold); font-weight: var(--weight-bold); color: var(--color-text); }
+.nav-placeholder { width: 80rpx; }
+
+/* ===== 内容 ===== */
+.share-content {
+  flex: 1;
+  padding: var(--space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(180deg, #FFF8F0 0%, #FFE4C4 100%);
-  padding: 80rpx 40rpx 60rpx;
   box-sizing: border-box;
 }
 
-.share-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 60rpx;
-}
-.share-app-icon { font-size: 80rpx; margin-bottom: 16rpx; }
-.share-app-name { font-size: 44rpx; font-weight: 700; color: var(--color-primary); }
-.share-app-slogan {
-  font-size: var(--font-sm);
-  color: var(--color-text-light);
-  margin-top: 8rpx;
-}
-
+/* ===== 分享卡片 640rpx × 840rpx ===== */
 .share-card {
-  width: 100%;
-  background: #fff;
+  width: 640rpx;
+  min-height: 840rpx;
+  background: var(--color-bg-card);
   border-radius: var(--radius-lg);
-  padding: 48rpx 32rpx;
+  border: 4rpx solid var(--color-secondary);
+  box-shadow: 0 8rpx 40rpx rgba(255, 179, 71, 0.2);
+  padding: var(--space-8) var(--space-6);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: var(--shadow-md);
-  margin-bottom: 48rpx;
+  box-sizing: border-box;
+  margin: var(--space-3) 0 var(--space-4);
 }
-.share-card-emoji { font-size: 100rpx; margin-bottom: 20rpx; }
-.share-card-title { font-size: var(--font-sm); color: var(--color-text-light); }
-.share-card-name { font-size: var(--font-xxl); font-weight: 700; margin: 8rpx 0; }
-.share-card-desc { font-size: var(--font-sm); color: var(--color-text-light); margin-top: 12rpx; }
 
-.enter-btn {
-  width: 400rpx;
+/* 卡片头部 */
+.card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+.card-badge { font-size: 48rpx; margin-bottom: var(--space-2); }
+.card-title {
+  font-size: var(--font-h3);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  text-align: center;
+}
+
+/* 卡片主体 */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+.card-emoji {
+  font-size: 120rpx;
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+}
+.card-food-name {
+  font-size: var(--font-h2);
+  font-weight: var(--weight-bold);
+  color: var(--color-primary);
+  text-align: center;
+}
+
+/* 餐厅信息 */
+.card-restaurant-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+.card-restaurant-name {
+  font-size: var(--font-body);
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+}
+.card-rating {
+  font-size: var(--font-body);
+  color: var(--color-secondary);
+  font-weight: var(--weight-medium);
+}
+
+/* 分割线 */
+.card-divider {
+  width: 80%;
+  height: 2rpx;
+  background: var(--color-divider);
+  margin: var(--space-4) 0;
+}
+
+/* CTA */
+.card-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+.cta-text {
+  font-size: var(--font-body-bold);
+  color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+}
+
+/* ===== 按钮行 ===== */
+.share-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 640rpx;
+  padding-bottom: var(--space-4);
+}
+.share-btn {
+  width: 100%;
   height: 88rpx;
   line-height: 88rpx;
-  font-size: var(--font-lg);
-  font-weight: 600;
+  font-size: var(--font-body);
+  font-weight: var(--weight-medium);
 }
+
+/* ===== 加载态 ===== */
+.loading-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading-text { color: var(--color-text-secondary); font-size: var(--font-body); }

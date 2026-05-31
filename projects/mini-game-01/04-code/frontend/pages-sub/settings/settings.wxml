@@ -1,5 +1,6 @@
 <!--settings.wxml - 设置-->
 <view class="settings-container">
+  <!-- 导航栏 -->
   <view class="nav-bar">
     <view class="nav-back" bindtap="onBack"><text class="back-icon">←</text></view>
     <text class="nav-title">设置</text>
@@ -9,37 +10,97 @@
   <scroll-view class="settings-content" scroll-y="true">
     <!-- 通用设置 -->
     <view class="section">
-      <text class="section-title">通用</text>
+      <view class="section-title">通用</view>
+      <!-- 音效开关 -->
       <view class="setting-item">
-        <text class="setting-label">🔊 音效</text>
+        <view class="setting-label-wrap">
+          <text class="setting-icon">🔊</text>
+          <text class="setting-label">音效</text>
+        </view>
         <switch checked="{{soundOn}}" bindchange="onToggleSound" color="#FF6B35" />
       </view>
+      <!-- 震动开关 -->
       <view class="setting-item">
-        <text class="setting-label">📳 震动</text>
+        <view class="setting-label-wrap">
+          <text class="setting-icon">📳</text>
+          <text class="setting-label">震动</text>
+        </view>
         <switch checked="{{vibrationOn}}" bindchange="onToggleVibration" color="#FF6B35" />
+      </view>
+      <!-- 通知开关 -->
+      <view class="setting-item">
+        <view class="setting-label-wrap">
+          <text class="setting-icon">🔔</text>
+          <text class="setting-label">接收活动通知</text>
+        </view>
+        <switch checked="{{notificationOn}}" bindchange="onToggleNotification" color="#FF6B35" />
       </view>
     </view>
 
     <!-- 存储 -->
     <view class="section">
-      <text class="section-title">存储</text>
-      <view class="setting-item" bindtap="onClearCache">
-        <text class="setting-label">🗑️ 清除缓存</text>
-        <text class="setting-value">{{cacheSize}} KB</text>
+      <view class="section-title">存储</view>
+      <!-- 清除缓存 -->
+      <view class="setting-item clickable" bindtap="onClearCache">
+        <view class="setting-label-wrap">
+          <text class="setting-icon">🗑️</text>
+          <text class="setting-label">清除缓存</text>
+        </view>
+        <view class="setting-right">
+          <text class="setting-value">{{cacheSize}}KB</text>
+          <text class="setting-arrow">›</text>
+        </view>
       </view>
     </view>
 
     <!-- 其他 -->
     <view class="section">
-      <text class="section-title">其他</text>
-      <view class="setting-item" bindtap="onFeedback">
-        <text class="setting-label">💬 意见反馈</text>
-        <text class="setting-arrow">›</text>
+      <view class="section-title">其他</view>
+      <!-- 意见反馈 -->
+      <view class="setting-item clickable" bindtap="onFeedback">
+        <view class="setting-label-wrap">
+          <text class="setting-icon">💬</text>
+          <text class="setting-label">意见反馈</text>
+        </view>
+        <view class="setting-right">
+          <text class="setting-arrow">›</text>
+        </view>
       </view>
-      <view class="setting-item">
-        <text class="setting-label">📋 关于</text>
-        <text class="setting-value">v1.0.0</text>
+      <!-- 隐私政策 -->
+      <view class="setting-item clickable" bindtap="onPrivacyPolicy">
+        <view class="setting-label-wrap">
+          <text class="setting-icon">🔒</text>
+          <text class="setting-label">隐私政策</text>
+        </view>
+        <view class="setting-right">
+          <text class="setting-arrow">›</text>
+        </view>
+      </view>
+      <!-- 用户协议 -->
+      <view class="setting-item clickable" bindtap="onUserAgreement">
+        <view class="setting-label-wrap">
+          <text class="setting-icon">📋</text>
+          <text class="setting-label">用户协议</text>
+        </view>
+        <view class="setting-right">
+          <text class="setting-arrow">›</text>
+        </view>
       </view>
     </view>
+
+    <!-- 退出登录 -->
+    <view class="logout-section">
+      <view class="setting-item logout-item clickable" bindtap="onLogout">
+        <text class="logout-text">退出登录</text>
+      </view>
+    </view>
+
+    <!-- 版本号 -->
+    <view class="version-section">
+      <text class="version-text">版本 {{version}}</text>
+    </view>
+
+    <!-- 底部安全区 -->
+    <view class="safe-area-bottom"></view>
   </scroll-view>
 </view>

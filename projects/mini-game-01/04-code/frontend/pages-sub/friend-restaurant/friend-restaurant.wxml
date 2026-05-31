@@ -1,52 +1,79 @@
-<!--friend-restaurant.wxml - 好友餐厅-->
+<!--friend-restaurant.wxml - 好友餐厅（棋盘预览 + 点赞 + 灵感）-->
 <view class="fr-container">
+  <!-- 导航栏 -->
   <view class="nav-bar">
     <view class="nav-back" bindtap="onBack"><text class="back-icon">←</text></view>
-    <text class="nav-title">{{friendInfo.nickName}}的餐厅</text>
+    <text class="nav-title">{{friendInfo.restaurantName}}</text>
     <view class="nav-placeholder"></view>
   </view>
 
   <scroll-view class="fr-content" scroll-y="true" wx:if="{{!loading && friendInfo}}">
-    <!-- 餐厅信息 -->
+    <!-- 餐厅信息卡 -->
     <view class="restaurant-hero">
-      <text class="hero-emoji">{{friendInfo.restaurantLevel === 1 ? '🛒' : friendInfo.restaurantLevel === 2 ? '🏠' : friendInfo.restaurantLevel === 3 ? '🏪' : friendInfo.restaurantLevel === 4 ? '🏛️' : '👑'}}</text>
+      <view class="hero-avatar">
+        <text class="hero-emoji">{{friendInfo.restaurantLevel === 1 ? '🛒' : friendInfo.restaurantLevel === 2 ? '🏠' : friendInfo.restaurantLevel === 3 ? '🏪' : friendInfo.restaurantLevel === 4 ? '🏛️' : '👑'}}</text>
+      </view>
       <text class="hero-name">{{friendInfo.restaurantName}}</text>
       <text class="hero-level">Lv.{{friendInfo.restaurantLevel}}</text>
+      <view class="hero-rating">
+        <text class="star-icon">⭐</text>
+        <text class="rating-value">{{friendInfo.rating}}</text>
+      </view>
     </view>
 
-    <!-- 数据 -->
+    <!-- 统计行 -->
     <view class="stats-row">
       <view class="stat-item">
-        <text class="stat-value">⭐{{friendInfo.rating}}</text>
+        <text class="stat-value">⭐ {{friendInfo.rating}}</text>
         <text class="stat-label">好评度</text>
       </view>
       <view class="stat-item">
-        <text class="stat-value">❤️{{friendInfo.likeCount}}</text>
+        <text class="stat-value">❤️ {{likeCount}}</text>
         <text class="stat-label">获赞</text>
       </view>
       <view class="stat-item">
-        <text class="stat-value">👣{{friendInfo.visitCount}}</text>
+        <text class="stat-value">👣 {{friendInfo.visitCount}}</text>
         <text class="stat-label">被拜访</text>
       </view>
     </view>
 
+    <!-- 只读棋盘预览 -->
+    <view class="board-section">
+      <text class="board-section-title">🍳 棋盘预览</text>
+      <view class="board-grid" style="grid-template-columns:repeat({{boardCols}},1fr)">
+        <block wx:for="{{boardItems}}" wx:for-item="row" wx:key="*this">
+          <view class="board-cell {{cell.filled ? 'filled' : 'empty'}}"
+                wx:for="{{row}}" wx:for-item="cell" wx:key="id">
+            <text class="cell-emoji" wx:if="{{cell.filled}}">{{cell.emoji}}</text>
+            <text class="cell-name" wx:if="{{cell.filled}}">{{cell.name}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 只读提示 -->
+    <text class="read-only-hint">这是好友的餐厅，不能操作哦</text>
+
     <!-- 操作按钮 -->
     <view class="actions">
-      <button class="btn-primary action-btn" bindtap="onVisit" disabled="{{visited}}">
-        {{visited ? '已拜访 ✓' : '🔍 拜访获取灵感'}}
+      <button class="btn-primary action-btn {{inspirationGot ? 'btn-done' : ''}}" bindtap="onGetInspiration" disabled="{{inspirationGot}}">
+        {{inspirationGot ? '✨ 已获取灵感' : '💡 拜访获取灵感'}}
       </button>
-      <button class="btn-secondary action-btn" bindtap="onLike" disabled="{{liked}}">
-        {{liked ? '已点赞 ❤️' : '❤️ 点赞'}}
+      <button class="btn-secondary action-btn like-btn {{liked ? 'liked' : ''}}" bindtap="onLike" disabled="{{liked}}">
+        <text class="like-heart {{likeAnimating ? 'pulse-anim' : ''}}" wx:if="{{!liked}}">❤️</text>
+        <text class="like-heart {{likeAnimating ? 'pulse-anim' : ''}}" wx:if="{{liked}}">❤️</text>
+        <text>{{liked ? '已点赞 ❤️' : '❤️ 点赞'}}</text>
       </button>
     </view>
 
     <!-- 灵感提示 -->
-    <view class="inspiration-tip" wx:if="{{visited && inspiration > 0}}">
+    <view class="inspiration-tip" wx:if="{{inspirationGot && inspiration > 0}}">
       <text>✨ 获得 {{inspiration}} 点灵感值！灵感可用于加速食材生成</text>
     </view>
   </scroll-view>
 
+  <!-- 加载态 -->
   <view class="loading-state" wx:if="{{loading}}">
-    <text>加载中...</text>
+    <text class="loading-text">加载中...</text>
   </view>
 </view>

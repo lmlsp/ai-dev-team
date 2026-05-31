@@ -31,7 +31,7 @@
   text-align: center;
   padding: 12rpx;
   font-size: var(--font-md);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
   border-bottom: 3rpx solid transparent;
   transition: all 0.2s;
 }
@@ -62,13 +62,13 @@
   justify-content: center;
   font-size: var(--font-md);
   font-weight: 700;
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
 }
 .rank-1, .rank-2, .rank-3 { font-size: 32rpx; }
 .lb-avatar { font-size: 40rpx; }
 .lb-info { flex: 1; display: flex; flex-direction: column; }
 .lb-name { font-size: var(--font-md); font-weight: 600; }
-.lb-restaurant { font-size: var(--font-xs); color: var(--color-text-light); }
+.lb-restaurant { font-size: var(--font-xs); color: var(--color-text-secondary); }
 .lb-stats { display: flex; flex-direction: column; align-items: flex-end; }
 .lb-rating { font-size: var(--font-sm); color: #FFD700; }
 .lb-level { font-size: var(--font-xs); color: var(--color-primary); }
@@ -79,7 +79,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
   gap: 16rpx;
 }
 
@@ -95,5 +95,5 @@
 }
 .my-rank-left { display: flex; align-items: center; gap: 12rpx; }
 .my-rank-num { font-size: var(--font-lg); font-weight: 700; color: var(--color-primary); }
-.my-rank-label { font-size: var(--font-sm); color: var(--color-text-light); }
+.my-rank-label { font-size: var(--font-sm); color: var(--color-text-secondary); }
 .my-rating { font-size: var(--font-md); font-weight: 600; }

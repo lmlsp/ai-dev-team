@@ -1,5 +1,9 @@
-<!--gold-display.wxml-->
+<!-- gold-display.wxml — UI 设计 §4.6 金币展示 -->
 <view class="gold-display">
-  <text class="gold-icon">🪙</text>
-  <text class="gold-amount {{animating ? 'animating' : ''}}">{{displayAmount}}</text>
+  <!-- CSS 径向渐变圆形金币图标 -->
+  <view class="gold-icon"></view>
+  <!-- 逗号格式化金额 -->
+  <text class="gold-amount {{animating ? 'animating' : ''}}">{{displayAmountFormatted}}</text>
+  <!-- 增长飘字 -->
+  <text class="gold-earn" wx:if="{{earnAmount > 0}}">+{{earnAmount}}</text>
 </view>

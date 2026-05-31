@@ -1,0 +1,191 @@
+/* tutorial.wxss — 新手引导（蒙层 + 高亮开孔 + 气泡卡片） */
+.tutorial-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--z-tutorial);
+  overflow: hidden;
+}
+
+/* ===== 蒙层 ===== */
+.tutorial-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 24, 10, 0.6);
+  z-index: 1;
+}
+
+/* ===== 高亮开孔区域 ===== */
+.highlight-cutout {
+  position: absolute;
+  z-index: 2;
+  /* 用巨大 box-shadow 制造开孔效果 */
+  box-shadow: 0 0 0 9999rpx rgba(45, 24, 10, 0.6);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  pointer-events: none;
+}
+
+/* 高亮区域呼吸边框 */
+.highlight-border {
+  width: 100%;
+  height: 100%;
+  border: 4rpx solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  animation: breathe 1.5s ease-in-out infinite;
+  box-sizing: border-box;
+}
+
+/* ===== 箭头指示 ===== */
+.highlight-arrow {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.arrow-icon {
+  font-size: 40rpx;
+  animation: bounce 1.5s ease-in-out infinite;
+  position: absolute;
+  bottom: -52rpx;
+}
+
+/* ===== 跳过按钮 ===== */
+.skip-btn-wrap {
+  position: absolute;
+  top: 100rpx;
+  right: var(--space-3);
+  z-index: 5;
+  padding: var(--space-1) var(--space-2);
+}
+.skip-btn {
+  font-size: var(--font-caption);
+  color: rgba(255, 255, 255, 0.8);
+  padding: var(--space-1) var(--space-2);
+}
+
+/* ===== 提示气泡卡片 ===== */
+.tip-card {
+  position: absolute;
+  z-index: 4;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-4) var(--space-4);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* 三角形箭头 */
+.tip-arrow {
+  position: absolute;
+  top: -16rpx;
+  width: 0;
+  height: 0;
+  border-left: 20rpx solid transparent;
+  border-right: 20rpx solid transparent;
+  border-bottom: 20rpx solid var(--color-bg-card);
+}
+
+/* ===== 步骤指示器 ===== */
+.step-indicator {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+.step-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: var(--radius-round);
+  border: 3rpx solid var(--color-text-disabled);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+.step-dot.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: scale(1.15);
+}
+
+/* 步骤计数 */
+.step-number {
+  font-size: var(--font-mini);
+  color: var(--color-text-disabled);
+  margin-bottom: var(--space-2);
+}
+
+/* 标题 */
+.tip-title {
+  font-size: var(--font-h3);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+
+/* 描述 */
+.tip-desc {
+  font-size: var(--font-body);
+  color: var(--color-text-secondary);
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+/* 按钮区 */
+.tip-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+.next-btn {
+  width: 240rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: var(--font-body);
+  border-radius: var(--radius-lg);
+}
+
+/* ===== 动画 ===== */
+@keyframes breathe {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 12rpx rgba(255, 107, 53, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 53, 0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12rpx); }
+}
+
+/* 过渡动画 */
+.fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+.fade-out {
+  animation: fadeOut 0.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

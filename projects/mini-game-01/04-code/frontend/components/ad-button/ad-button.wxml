@@ -1,5 +1,12 @@
-<!--ad-button.wxml-->
-<view class="ad-btn {{disabled || loading ? 'disabled' : ''}}" bindtap="onTap">
-  <text class="ad-btn-icon">{{icon}}</text>
-  <text class="ad-btn-label">{{loading ? '加载中...' : label}}</text>
+<!-- ad-button.wxml — UI 设计 §4.4 广告按钮 -->
+<view class="ad-btn {{disabled ? 'disabled' : ''}}" bindtap="onTap">
+  <!-- 加载态：旋转圆环 -->
+  <view wx:if="{{loading}}" class="ad-btn-loading">
+    <view class="loading-ring"></view>
+  </view>
+  <!-- 正常态：▶ 图标 + 标签 -->
+  <view wx:else class="ad-btn-content">
+    <text class="ad-btn-icon">▶</text>
+    <text class="ad-btn-label">{{label}}</text>
+  </view>
 </view>

@@ -1,22 +1,49 @@
-/* gold-display.wxss */
+/* gold-display.wxss — UI 设计 §4.6 金币展示 */
+@import '../../app.wxss';
+
 .gold-display {
   display: flex;
   align-items: center;
-  gap: 4rpx;
-  padding: 4rpx 12rpx;
-  background: linear-gradient(135deg, #FFF8E1, #FFE082);
-  border-radius: 20rpx;
+  gap: 8rpx;
+  height: 56rpx;          /* 28px */
+  padding: 0 var(--space-1);
+  position: relative;
 }
-.gold-icon { font-size: 24rpx; }
+
+/* 金币图标 — CSS 径向渐变模拟 24px 圆形 */
+.gold-icon {
+  width: 48rpx;           /* 24px */
+  height: 48rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FFD700, #FFB347);
+  box-shadow: 0 2rpx 8rpx rgba(255, 179, 71, 0.35);
+  flex-shrink: 0;
+}
+
+/* 金额数字 — 逗号格式化 */
 .gold-amount {
-  font-size: var(--font-sm);
-  font-weight: 700;
-  color: #8D6E00;
+  font-size: 32rpx;       /* 16px */
+  font-weight: var(--weight-medium, 500);
+  color: var(--color-text, #2C1810);
+  line-height: 1;
 }
+
+/* 金额增加脉冲动效 */
 .gold-amount.animating {
   animation: pulse 0.3s ease;
 }
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+
+/* 飘字 "+N" — 增加时浮起淡出 */
+.gold-earn {
+  position: absolute;
+  left: 50%;
+  top: -8rpx;
+  transform: translateX(-50%);
+  font-size: var(--font-caption-bold, 24rpx);
+  font-weight: var(--weight-bold, 700);
+  color: var(--color-success, #4CAF50);
+  pointer-events: none;
+  animation: floatUp 0.8s ease-out forwards;
+  z-index: 10;
+  white-space: nowrap;
 }

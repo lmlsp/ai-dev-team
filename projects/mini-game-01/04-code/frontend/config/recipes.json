@@ -34,7 +34,7 @@
       { "itemType": "tomato", "level": 2 },
       { "itemType": "egg", "level": 3 }
     ],
-    "result": { "itemType": "tomato_egg_dish", "level": 0, "display": "番茄炒蛋", "emoji": "🍲", "isTerminal": true, "story": "国民第一家常菜，酸甜可口人人爱" }
+    "result": { "itemType": "tomato_egg_dish", "level": 0, "display": "番茄炒蛋", "emoji": "🍳", "isTerminal": true, "story": "国民第一家常菜，酸甜可口人人爱" }
   },
   {
     "chainId": "rice",
@@ -152,7 +152,7 @@
       { "itemType": "pork", "level": 1 },
       { "itemType": "pepper", "level": 1 }
     ],
-    "result": { "itemType": "yuxiang_rousi", "level": 0, "display": "鱼香肉丝", "emoji": "🍛", "isTerminal": true, "story": "没有鱼的鱼香，却有鱼的鲜" }
+    "result": { "itemType": "yuxiang_rousi", "level": 0, "display": "鱼香肉丝", "emoji": "🥡", "isTerminal": true, "story": "没有鱼的鱼香，却有鱼的鲜" }
   },
   {
     "chainId": "kungpao_chicken",
@@ -163,7 +163,7 @@
     "steps": [
       { "itemType": "chicken", "level": 0, "display": "鸡肉", "emoji": "🍗" },
       { "itemType": "chicken", "level": 1, "display": "鸡丁", "emoji": "🍖" },
-      { "itemType": "kungpao_chicken", "level": 0, "display": "宫保鸡丁", "emoji": "🍲", "isTerminal": true }
+      { "itemType": "kungpao_chicken", "level": 0, "display": "宫保鸡丁", "emoji": "🍗", "isTerminal": true }
     ]
   },
   {
@@ -365,7 +365,7 @@
     "steps": [
       { "itemType": "duck", "level": 0, "display": "鸭子", "emoji": "🦆" },
       { "itemType": "duck", "level": 1, "display": "处理好的鸭", "emoji": "🦆" },
-      { "itemType": "secret_peking_duck", "level": 0, "display": "北京烤鸭", "emoji": "🍗", "isTerminal": true }
+      { "itemType": "secret_peking_duck", "level": 0, "display": "北京烤鸭", "emoji": "🦆", "isTerminal": true }
     ]
   },
   {

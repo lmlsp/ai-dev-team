@@ -156,8 +156,13 @@ class DragHandler {
     const dx = touch.x - this.dragState.startX;
     const dy = touch.y - this.dragState.startY;
 
-    // 移动超过阈值才判定为拖拽
+    // 移动超过阈值（8px）才判定为拖拽
     if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+
+    // 第一次超过阈值时触发触摸反馈（§8.3）
+    if (!this._hasMoved) {
+      wx.vibrateShort({ type: 'light' });
+    }
 
     this._hasMoved = true;
     if (this._longPressTimer) {

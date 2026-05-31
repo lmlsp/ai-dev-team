@@ -1,4 +1,4 @@
-/* settings.wxss */
+/* settings.wxss — 设置页面 */
 .settings-container {
   width: 100vw;
   height: 100vh;
@@ -6,39 +6,112 @@
   flex-direction: column;
   background: var(--color-bg);
 }
+
+/* ===== 导航栏 ===== */
 .nav-bar {
   height: 88rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24rpx;
-  background: #fff;
+  padding: 0 var(--space-3);
+  background: var(--color-bg-card);
   flex-shrink: 0;
 }
-.nav-back { width: 80rpx; }
+.nav-back {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 .back-icon { font-size: 40rpx; color: var(--color-text); }
-.nav-title { font-size: var(--font-lg); font-weight: 700; }
+.nav-title { font-size: var(--font-body-bold); font-weight: var(--weight-bold); color: var(--color-text); }
 .nav-placeholder { width: 80rpx; }
 
-.settings-content { flex: 1; padding: 24rpx; }
-
-.section { margin-bottom: 32rpx; }
-.section-title {
-  font-size: var(--font-xs);
-  color: var(--color-text-light);
-  margin-bottom: 12rpx;
-  padding-left: 8rpx;
+/* ===== 内容区 ===== */
+.settings-content {
+  flex: 1;
+  padding: var(--space-3);
+  box-sizing: border-box;
 }
 
+/* ===== 区块 ===== */
+.section {
+  margin-bottom: var(--space-4);
+}
+.section-title {
+  font-size: var(--font-caption);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+  padding-left: var(--space-1);
+}
+
+/* ===== 设置项 ===== */
 .setting-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24rpx 20rpx;
-  background: #fff;
-  border-radius: var(--radius-md);
-  margin-bottom: 4rpx;
+  padding: var(--space-3) var(--space-3);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-1);
+  box-shadow: var(--shadow-sm);
 }
-.setting-label { font-size: var(--font-md); }
-.setting-value { font-size: var(--font-sm); color: var(--color-text-light); }
-.setting-arrow { font-size: 32rpx; color: #ccc; }
+.setting-item.clickable:active {
+  background: var(--color-primary-light);
+}
+.setting-item:last-child {
+  margin-bottom: 0;
+}
+
+.setting-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.setting-icon { font-size: var(--font-body); }
+.setting-label { font-size: var(--font-body); color: var(--color-text); }
+.setting-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.setting-value {
+  font-size: var(--font-caption);
+  color: var(--color-text-secondary);
+}
+.setting-arrow {
+  font-size: 36rpx;
+  color: var(--color-text-disabled);
+}
+
+/* ===== 退出登录 ===== */
+.logout-section {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+}
+.logout-item {
+  justify-content: center;
+  border: 2rpx solid var(--color-danger);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-card);
+}
+.logout-item:active {
+  background: #FFF0F0;
+}
+.logout-text {
+  font-size: var(--font-body);
+  color: var(--color-danger);
+  font-weight: var(--weight-medium);
+}
+
+/* ===== 版本号 ===== */
+.version-section {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-4) 0;
+}
+.version-text {
+  font-size: var(--font-caption);
+  color: var(--color-text-disabled);
+}

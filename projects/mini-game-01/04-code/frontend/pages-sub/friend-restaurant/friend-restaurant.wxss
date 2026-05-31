@@ -1,4 +1,4 @@
-/* friend-restaurant.wxss */
+/* friend-restaurant.wxss — 好友餐厅 */
 .fr-container {
   width: 100vw;
   height: 100vh;
@@ -6,69 +6,207 @@
   flex-direction: column;
   background: var(--color-bg);
 }
+
+/* ===== 导航栏 ===== */
 .nav-bar {
   height: 88rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24rpx;
-  background: #fff;
+  padding: 0 var(--space-3);
+  background: var(--color-bg-card);
   flex-shrink: 0;
 }
-.nav-back { width: 80rpx; }
+.nav-back {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 .back-icon { font-size: 40rpx; color: var(--color-text); }
-.nav-title { font-size: var(--font-lg); font-weight: 700; }
+.nav-title { font-size: var(--font-body-bold); font-weight: var(--weight-bold); color: var(--color-text); }
 .nav-placeholder { width: 80rpx; }
 
-.fr-content { flex: 1; padding: 24rpx; }
+.fr-content {
+  flex: 1;
+  padding: var(--space-3);
+  box-sizing: border-box;
+}
 
+/* ===== 餐厅信息卡 ===== */
 .restaurant-hero {
   background: linear-gradient(135deg, #FFF8F0, #FFE0C0);
-  border-radius: var(--radius-lg);
-  padding: 48rpx 24rpx;
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 24rpx;
+  margin-bottom: var(--space-3);
 }
-.hero-emoji { font-size: 100rpx; margin-bottom: 16rpx; }
-.hero-name { font-size: var(--font-xl); font-weight: 700; margin-bottom: 8rpx; }
-.hero-level { font-size: var(--font-md); color: var(--color-primary); }
+.hero-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-round);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-2);
+  box-shadow: var(--shadow-sm);
+}
+.hero-emoji { font-size: 64rpx; }
+.hero-name { font-size: var(--font-h3); font-weight: var(--weight-bold); color: var(--color-text); }
+.hero-level { font-size: var(--font-caption); color: var(--color-primary); margin-top: var(--space-1); }
+.hero-rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+.star-icon { font-size: var(--font-body); }
+.rating-value { font-size: var(--font-body); color: var(--color-secondary); font-weight: var(--weight-semibold); }
 
+/* ===== 统计行 ===== */
 .stats-row {
   display: flex;
   justify-content: space-around;
-  background: #fff;
-  border-radius: var(--radius-md);
-  padding: 24rpx;
-  margin-bottom: 24rpx;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-sm);
 }
 .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4rpx;
+  gap: var(--space-1);
 }
-.stat-value { font-size: var(--font-lg); font-weight: 600; }
-.stat-label { font-size: var(--font-xs); color: var(--color-text-light); }
+.stat-value { font-size: var(--font-body-bold); font-weight: var(--weight-semibold); color: var(--color-text); }
+.stat-label { font-size: var(--font-caption); color: var(--color-text-secondary); }
 
-.actions { display: flex; flex-direction: column; gap: 16rpx; }
-.action-btn { width: 100%; height: 88rpx; }
+/* ===== 棋盘预览 ===== */
+.board-section {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+  box-shadow: var(--shadow-sm);
+}
+.board-section-title {
+  font-size: var(--font-body);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+.board-grid {
+  display: grid;
+  gap: 6rpx;
+}
+.board-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  padding: 6rpx 0;
+  min-height: 72rpx;
+}
+.board-cell.filled {
+  background: var(--color-bg);
+  opacity: 0.5;
+}
+.board-cell.empty {
+  background: transparent;
+}
+.cell-emoji { font-size: 28rpx; line-height: 1.2; }
+.cell-name {
+  font-size: 16rpx;
+  color: var(--color-text-secondary);
+  line-height: 1.2;
+  margin-top: 2rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80rpx;
+}
 
-.inspiration-tip {
-  margin-top: 24rpx;
-  padding: 20rpx;
-  background: #FFF8E1;
-  border-radius: var(--radius-md);
+/* ===== 只读提示 ===== */
+.read-only-hint {
+  display: block;
   text-align: center;
-  font-size: var(--font-sm);
+  font-size: var(--font-caption);
+  color: var(--color-text-disabled);
+  margin-bottom: var(--space-3);
+}
+
+/* ===== 操作按钮 ===== */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.action-btn {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: var(--font-body);
+  font-weight: var(--weight-medium);
+}
+.action-btn.btn-done {
+  background: var(--color-divider);
+  color: var(--color-text-secondary);
+  border: none;
+}
+
+/* 点赞按钮 */
+.like-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+}
+.like-heart {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-out-back);
+}
+.like-heart.pulse-anim {
+  animation: heartPulse 0.6s var(--ease-out-back);
+}
+.like-btn.liked {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
   color: var(--color-primary);
 }
 
+/* ❤️ 点赞呼吸动画 */
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.4); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* ===== 灵感提示 ===== */
+.inspiration-tip {
+  margin-top: var(--space-2);
+  padding: var(--space-3);
+  background: #FFF8E1;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-size: var(--font-caption);
+  color: var(--color-primary);
+  margin-bottom: var(--space-8);
+}
+
+/* ===== 加载态 ===== */
 .loading-state {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-light);
 }
+.loading-text { color: var(--color-text-secondary); font-size: var(--font-body); }

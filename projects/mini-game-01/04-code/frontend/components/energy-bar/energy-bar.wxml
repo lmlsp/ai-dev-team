@@ -1,15 +1,18 @@
-<!--energy-bar.wxml-->
+<!-- energy-bar.wxml -- UI 设计 §4.5 能量条 -->
 <view class="energy-bar-container">
-  <view class="energy-header">
+  <!-- 能量条轨道 -->
+  <view class="energy-track {{percentage < 20 ? 'low' : ''}}">
+    <!-- 填充条 -->
+    <view class="energy-fill {{percentage < 20 ? 'low' : ''}}" style="width: {{percentage}}%">
+      <!-- 流光边缘（满能量时隐藏） -->
+      <view class="shimmer-edge" wx:if="{{percentage < 100 && percentage >= 20}}"></view>
+    </view>
+    <!-- ⚡ 图标 -->
     <text class="energy-icon">⚡</text>
-    <text class="energy-text">{{current}}/{{max}}</text>
-    <text class="energy-countdown" wx:if="{{countdownText}}">{{countdownText}}</text>
-    <text class="energy-full" wx:elif="{{isFull}}">已满</text>
+    <!-- 数值 -->
+    <text class="energy-number">{{current}}/{{max}}</text>
   </view>
-  <view class="energy-progress">
-    <view class="energy-fill {{percentage < 20 ? 'low' : ''}}" style="width: {{percentage}}%"></view>
-  </view>
-  <view class="energy-ad-btn" wx:if="{{!isFull && dailyAdRemaining > 0}}" bindtap="onWatchAd">
-    <text>看广告 +30⚡ (剩{{dailyAdRemaining}}次)</text>
-  </view>
+
+  <!-- "+" 看广告按钮 -->
+  <view class="energy-add-btn" wx:if="{{!isFull && dailyAdRemaining > 0}}" bindtap="onWatchAd">+</view>
 </view>

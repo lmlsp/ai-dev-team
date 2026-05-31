@@ -1,0 +1,49 @@
+<!--tutorial.wxml - 新手引导（6步蒙层高亮）-->
+<view class="tutorial-container">
+  <!-- 蒙层（同时可点击跳过的区域） -->
+  <view class="tutorial-mask {{fadeAnim}}" catchtap="onSkip"></view>
+
+  <!-- 高亮开孔区域（box-shadow 制造"透明窗"效果） -->
+  <view class="highlight-cutout {{fadeAnim}}" style="{{highlightStyle}}">
+    <!-- 呼吸边框动画 -->
+    <view class="highlight-border"></view>
+  </view>
+
+  <!-- 箭头指示 -->
+  <view class="highlight-arrow {{fadeAnim}}" style="{{highlightStyle}}">
+    <text class="arrow-icon">👇</text>
+  </view>
+
+  <!-- 跳过按钮 -->
+  <view class="skip-btn-wrap {{fadeAnim}}">
+    <text class="skip-btn" bindtap="onSkip">跳过</text>
+  </view>
+
+  <!-- 提示气泡卡片 -->
+  <view class="tip-card {{fadeAnim}}" style="{{tipStyle}}">
+    <!-- 三角形箭头 -->
+    <view class="tip-arrow"></view>
+
+    <!-- 步骤指示器 -->
+    <view class="step-indicator">
+      <view class="step-dot {{index <= currentStep ? 'active' : ''}}"
+            wx:for="{{[0,1,2,3,4,5]}}" wx:key="*this"></view>
+    </view>
+
+    <!-- 步骤数 -->
+    <text class="step-number">{{currentStep + 1}}/6</text>
+
+    <!-- 标题 -->
+    <text class="tip-title">{{step.title}}</text>
+    <!-- 描述 -->
+    <text class="tip-desc">{{step.desc}}</text>
+
+    <!-- 按钮 -->
+    <view class="tip-actions">
+      <view></view>
+      <button class="btn-primary next-btn" bindtap="onNext">
+        {{isLast ? '开始烹饪！' : '下一步'}}
+      </button>
+    </view>
+  </view>
+</view>

@@ -1,5 +1,6 @@
 /**
- * inventory.js — 背包/道具
+ * inventory.js — 道具背包（2列网格布局）
+ * 数据来源：config/items.json + gameStore
  */
 const items = require('../../config/items.json');
 const i18n = require('../../utils/i18n');
@@ -42,8 +43,8 @@ Page({
     if (!item) return;
 
     wx.showModal({
-      title: '使用道具',
-      content: `确定使用 ${item.name} 吗？\n${item.description}`,
+      title: i18n.t('inventory.confirm_use', { name: item.name }),
+      content: item.description,
       success: (res) => {
         if (res.confirm) {
           this._applyItem(item);
@@ -58,7 +59,7 @@ Page({
     const count = ownedItems[item.id] || 0;
 
     if (count <= 0) {
-      wx.showToast({ title: '道具数量不足', icon: 'none' });
+      wx.showToast({ title: i18n.t('inventory.no_items'), icon: 'none' });
       return;
     }
 
@@ -69,22 +70,22 @@ Page({
     // 应用效果
     switch (item.effect.type) {
       case 'speed_boost':
-        wx.showToast({ title: '食材生成速度翻倍！持续30分钟', icon: 'success' });
+        wx.showToast({ title: i18n.t('inventory.effect_speed_boost'), icon: 'success' });
         break;
       case 'instant_generate':
-        wx.showToast({ title: `生成了 ${item.effect.count} 个食材！`, icon: 'success' });
+        wx.showToast({ title: i18n.t('inventory.effect_generate', { count: item.effect.count }), icon: 'success' });
         break;
       case 'time_freeze':
-        wx.showToast({ title: '顾客等待时间冻结30秒！', icon: 'success' });
+        wx.showToast({ title: i18n.t('inventory.effect_time_freeze'), icon: 'success' });
         break;
       case 'gold_boost':
-        wx.showToast({ title: '金币获取增加50%！持续10分钟', icon: 'success' });
+        wx.showToast({ title: i18n.t('inventory.effect_gold_boost'), icon: 'success' });
         break;
       case 'double_luck':
-        wx.showToast({ title: '幸运加倍已激活！', icon: 'success' });
+        wx.showToast({ title: i18n.t('inventory.effect_double_luck'), icon: 'success' });
         break;
       default:
-        wx.showToast({ title: '道具已使用', icon: 'success' });
+        wx.showToast({ title: i18n.t('inventory.use_success'), icon: 'success' });
     }
 
     console.log('[Inventory] 使用道具:', item.id);

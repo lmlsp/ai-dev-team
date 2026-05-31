@@ -2,7 +2,7 @@
 .loading-container {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(180deg, #FFF8F0 0%, #FFE4C4 100%);
+  background: linear-gradient(180deg, #FFF8F2 0%, #FFE8D6 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,12 +47,13 @@
 }
 .logo-subtitle {
   font-size: var(--font-sm);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
 }
 
 /* 进度条 */
 .progress-area {
-  width: 500rpx;
+  width: 560rpx;
+  max-width: 560rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,25 +62,25 @@
 .progress-bar {
   width: 100%;
   height: 12rpx;
-  background: rgba(255,107,53,0.15);
+  background: #EDE4DA;
   border-radius: 6rpx;
   overflow: hidden;
   margin-bottom: 20rpx;
 }
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  background: #FF6B35;
   border-radius: 6rpx;
   transition: width 0.3s ease;
 }
 .progress-text {
   font-size: var(--font-sm);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
   margin-bottom: 8rpx;
 }
 .progress-percent {
   font-size: var(--font-xs);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
 }
 
 /* 错误区 */
@@ -95,7 +96,7 @@
 }
 .error-text {
   font-size: var(--font-md);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
   margin-bottom: 40rpx;
 }
 .retry-btn {
@@ -106,7 +107,7 @@
 }
 .skip-btn {
   font-size: var(--font-sm);
-  color: var(--color-text-light);
+  color: var(--color-text-secondary);
 }
 
 /* 版本号 */
