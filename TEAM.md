@@ -6,7 +6,18 @@
 
 ## 一、团队角色定义
 
-系统中存在以下角色：
+系统中存在以下角色。**编排者之外的所有角色工作在独立 session 中，上下文完全隔离。**
+
+### 0. 编排者（Orchestrator）— 主 session 角色
+
+编排者不是研发角色，而是流程调度者：
+
+- 接收用户需求，判断是否启动团队
+- 为每个角色构造 `spawn_task`（独立 session + 独立 worktree）
+- 每个 spawn_task 的 prompt 只包含：角色定义 + 上一份文档路径 + 产出要求
+- 检测角色完成后，触发下一角色
+- 当两个角色需要讨论时，编排者读取双方文档，在中间协调
+- 编排者不参与内容决策，只做流程调度
 
 ### 1. 产品经理（Product Manager）
 
@@ -185,13 +196,38 @@
 
 ## 二、团队协作规则（极其重要）
 
-**所有角色禁止共享全部上下文**，必须通过"文档流转"协作。
+### 物理隔离模式
 
-流程：
+每个角色在**独立 session** 中工作，上下文完全隔离，通过磁盘文档交接。
+
+### 编排机制
+
+使用 CCD `spawn_task` 为每个角色创建独立 session。编排者（Orchestrator）负责：
+
+1. 为每个角色生成独立的 spawn_task，传入上一角色的输出文档路径
+2. 角色 session 只读上一份文档，产出自己的文档
+3. 文档写入 `projects/<project-name>/` 目录
+4. 编排者检测角色完成后，触发下一角色
+
+### 角色间讨论
+
+当两个角色需要讨论完善方案时（如架构师评审 PRD 后提出问题），讨论发生在**编排层**：
+1. 角色 A 产出文档 + 提出待讨论问题
+2. 编排者将问题反馈给角色 B
+3. 角色 B 在新的 spawn_task 中回应修改
+4. 循环直到双方达成一致，继续流转
+
+### 项目目录规范
+
+参见 [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)。
+
+### 流转
 
 ```
-需求 → Product → Architect → UI Designer(可选) → Developer → Reviewer → QA → DevOps → 上线
+需求 → Product(独立session) → Architect(独立session) → [讨论回合] → Developer(独立session) → Reviewer(独立session) → QA(独立session) → DevOps(独立session) → 上线
 ```
+
+每个箭头 = 编排者触发 spawn_task，下一角色只看到上一份文档。
 
 ## 三、工作模式
 
